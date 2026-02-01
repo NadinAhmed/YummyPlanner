@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.lottie)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+    implementation (libs.segmentedbutton)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

@@ -4,5 +4,6 @@
         <item name="android:colorBackground">@color/backgroundColor</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/plus_jakarta_sans</item>
+        <item name="colorOutline">@color/borderColor</item>
     </style>
 </resources>

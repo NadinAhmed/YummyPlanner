@@ -12,6 +12,7 @@ fragment = "1.5.6"
 cardview = "1.0.0"
 navigationUi = "2.9.7"
 navigationFragmentKtx = "2.9.6"
+segmentedbutton = "3.1.9"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -26,6 +27,7 @@ fragment = { group = "androidx.fragment", name = "fragment", version.ref = "frag
 cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
 navigation-fragment = { module = "androidx.navigation:navigation-fragment", version.ref = "navigationUi" }
 navigation-ui = { module = "androidx.navigation:navigation-ui", version.ref = "navigationUi" }
+segmentedbutton = { module = "com.github.addisonelliott:SegmentedButton", version.ref = "segmentedbutton" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
