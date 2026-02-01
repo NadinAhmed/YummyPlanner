@@ -8,4 +8,6 @@
     <color name="secondaryTextColor">#9E5E47</color>
     <color name="borderColor">#E9D5CE</color>
     <color name="itemsBackgroundColor">#FFFFFF</color>
+    <color name="gradientEndColor">#00F8F6F5</color>
+    <color name="gradientStartColor">#F8F6F5</color>
 </resources>
