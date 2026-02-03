@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "257061166825",
+    "project_id": "yummyplanner-26ef5",
+    "storage_bucket": "yummyplanner-26ef5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:257061166825:android:c8d7df92992937299a9a78",
+        "android_client_info": {
+          "package_name": "com.nadin.yummy_planner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAP2I7_TJ6W4zHNv3JNfIzFPhKFs6hfo2Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

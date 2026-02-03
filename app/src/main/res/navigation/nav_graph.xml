@@ -7,16 +7,26 @@
 
     <fragment
         android:id="@+id/splashScreen"
-        android:name="com.nadin.yummy_planner.SplashScreen"
+        android:name="com.nadin.yummy_planner.features.splash.SplashScreen"
         android:label="fragment_splash_screen"
-        tools:layout="@layout/fragment_splash_screen" >
+        tools:layout="@layout/fragment_splash" >
         <action
             android:id="@+id/action_splashScreen_to_authScreen"
-            app:destination="@id/authScreen" />
+            app:destination="@id/authScreen"
+            app:popUpTo="@id/splashScreen"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/authScreen"
-        android:name="com.nadin.yummy_planner.AuthScreen"
+        android:name="com.nadin.yummy_planner.features.auth.AuthScreen"
         android:label="fragment_auth_screen"
-        tools:layout="@layout/fragment_auth_screen" />
+        tools:layout="@layout/fragment_auth" />
+    <fragment
+        android:id="@+id/errorFragment"
+        android:name="com.nadin.yummy_planner.ErrorFragment"
+        android:label="ErrorFragment" />
+    <fragment
+        android:id="@+id/loadingFragment"
+        android:name="com.nadin.yummy_planner.LoadingFragment"
+        android:label="LoadingFragment" />
 </navigation>

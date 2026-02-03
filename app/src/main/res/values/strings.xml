@@ -16,4 +16,7 @@
     <string name="google">Google</string>
     <string name="facebook">Facebook</string>
     <string name="continue_as_guest">Continue as Guest</string>
+    <string name="join_our_family">Join our Family!</string>
+    <string name="retry">Retry</string>
+    <string name="name">Name</string>
 </resources>

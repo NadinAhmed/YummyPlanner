@@ -1,5 +1,8 @@
 [versions]
 agp = "9.0.0"
+converterGson = "3.0.0"
+firebaseBom = "34.8.0"
+glide = "5.0.5"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
@@ -12,9 +15,17 @@ fragment = "1.5.6"
 cardview = "1.0.0"
 navigationUi = "2.9.7"
 navigationFragmentKtx = "2.9.6"
+retrofit = "3.0.0"
+roomCompiler = "2.8.4"
+roomRuntime = "2.8.4"
 segmentedbutton = "3.1.9"
 
 [libraries]
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+firebase-auth = { module = "com.google.firebase:firebase-auth" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -27,6 +38,9 @@ fragment = { group = "androidx.fragment", name = "fragment", version.ref = "frag
 cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
 navigation-fragment = { module = "androidx.navigation:navigation-fragment", version.ref = "navigationUi" }
 navigation-ui = { module = "androidx.navigation:navigation-ui", version.ref = "navigationUi" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 segmentedbutton = { module = "com.github.addisonelliott:SegmentedButton", version.ref = "segmentedbutton" }
 
 [plugins]
