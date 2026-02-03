@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,15 +20,17 @@ public class ViewStateController {
 
     private final FragmentAuthBinding binding;
     private final Context context;
+    private final FrameLayout contentViewId;
 
-    public ViewStateController(FragmentAuthBinding binding, Context context) {
+    public ViewStateController(FragmentAuthBinding binding, Context context, FrameLayout contentViewId) {
         this.binding = binding;
         this.context = context;
+        this.contentViewId = contentViewId;
     }
 
     public void showError(String message) {
         binding.viewState.loadingLayout.setVisibility(View.GONE);
-        binding.fragmentAuthContent.setVisibility(View.GONE);
+        contentViewId.setVisibility(View.GONE);
         binding.viewState.errorLayout.setVisibility(View.VISIBLE);
 
         binding.viewState.errorMessageTv.setText(message);
@@ -40,11 +43,11 @@ public class ViewStateController {
     public void showLoading() {
         binding.viewState.loadingLayout.setVisibility(View.VISIBLE);
         binding.viewState.errorLayout.setVisibility(View.GONE);
-        binding.fragmentAuthContent.setVisibility(View.GONE);
+        contentViewId.setVisibility(View.GONE);
     }
     public void showContent() {
         binding.viewState.loadingLayout.setVisibility(View.GONE);
         binding.viewState.errorLayout.setVisibility(View.GONE);
-        binding.fragmentAuthContent.setVisibility(View.VISIBLE);
+        contentViewId.setVisibility(View.VISIBLE);
     }
 }

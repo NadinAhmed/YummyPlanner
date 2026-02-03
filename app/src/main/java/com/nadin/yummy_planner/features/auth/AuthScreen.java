@@ -51,7 +51,8 @@ public class AuthScreen extends Fragment implements AuthContract.View {
         super.onViewCreated(view, savedInstanceState);
         viewStateController = new ViewStateController(
                 binding,
-                requireContext()
+                requireContext(),
+                binding.fragmentAuth
         );
         viewStateController.showContent();
 

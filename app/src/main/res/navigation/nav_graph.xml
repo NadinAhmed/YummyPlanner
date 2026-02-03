@@ -21,12 +21,4 @@
         android:name="com.nadin.yummy_planner.features.auth.AuthScreen"
         android:label="fragment_auth_screen"
         tools:layout="@layout/fragment_auth" />
-    <fragment
-        android:id="@+id/errorFragment"
-        android:name="com.nadin.yummy_planner.ErrorFragment"
-        android:label="ErrorFragment" />
-    <fragment
-        android:id="@+id/loadingFragment"
-        android:name="com.nadin.yummy_planner.LoadingFragment"
-        android:label="LoadingFragment" />
 </navigation>
