@@ -1,39 +1,71 @@
 package com.nadin.yummy_planner.presentation.home.view;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.nadin.yummy_planner.R;
 import com.nadin.yummy_planner.data.meal.model.Meal;
+import com.nadin.yummy_planner.databinding.FragmentHomeBinding;
+import com.nadin.yummy_planner.presentation.home.presenter.HomePresenter;
+import com.nadin.yummy_planner.presentation.home.presenter.HomePresenterImpl;
+import com.nadin.yummy_planner.utils.ViewStateController;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements HomeView {
 
     private RecyclerView popularMealsRecyclerView;
     private PopularMealsAdapter popularMealsAdapter;
+    private HomePresenter presenter;
+    private FragmentHomeBinding binding;
+    private ImageView mealOfDayIV;
+    private TextView mealOfDayTittle;
+    private TextView mealOfDayDescription;
+    private ConstraintLayout loadingLayout;
+    private ConstraintLayout errorLayout;
     private List<Meal> popularMeals;
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        popularMealsRecyclerView = view.findViewById(R.id.recycler_popular_meals);
+        mealOfDayIV = binding.imageMealOfTheDay;
+        mealOfDayTittle = binding.titleMeal;
+        mealOfDayDescription = binding.descriptionMeal;
+        loadingLayout = binding.loadingLayout;
+        errorLayout = binding.errorLayout;
+
+        presenter = new HomePresenterImpl(this);
+        popularMealsRecyclerView = binding.recyclerPopularMeals;
+
         popularMealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         // Dummy data
@@ -45,5 +77,41 @@ public class HomeFragment extends Fragment {
 
         popularMealsAdapter = new PopularMealsAdapter(popularMeals);
         popularMealsRecyclerView.setAdapter(popularMealsAdapter);
+    }
+
+    @Override
+    public void showLoading() {
+        loadingLayout.setVisibility(VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        loadingLayout.setVisibility(GONE);
+    }
+
+    @Override
+    public void showError(String error) {
+        errorLayout.setVisibility(VISIBLE);
+    }
+
+    @Override
+    public void setRandomMeal(Meal meal) {
+        mealOfDayTittle.setText(meal.getName());
+        mealOfDayDescription.setText(meal.getInstructions());
+        Glide.with(this)
+                .load(meal.getImageUrl())
+                .placeholder(R.drawable.logo_with_background)
+                .error(R.drawable.logo_with_background)
+                .into(mealOfDayIV);
+    }
+
+    @Override
+    public void setAllMeals(List<Meal> meals) {
+
+    }
+
+    @Override
+    public void onMealAddToFavSuccess() {
+
     }
 }

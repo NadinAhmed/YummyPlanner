@@ -113,33 +113,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:ellipsize="end"
                     android:fontFamily="@font/plus_jakarta_sans"
+                    android:maxLines="2"
                     android:text="Fresh basil, thai chilies, and tender chicken breast stir-fried to perfection."
                     android:textColor="@color/secondaryTextColor"
                     app:layout_constraintEnd_toEndOf="@id/title_meal"
                     app:layout_constraintStart_toStartOf="@id/title_meal"
                     app:layout_constraintTop_toBottomOf="@id/title_meal" />
-
-                <ImageView
-                    android:id="@+id/icon_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:src="@drawable/time_icon"
-                    app:layout_constraintStart_toStartOf="@id/description_meal"
-                    app:layout_constraintTop_toBottomOf="@id/description_meal" />
-
-                <TextView
-                    android:id="@+id/text_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:fontFamily="@font/plus_jakarta_sans_medium"
-                    android:text="20 min"
-                    android:textColor="@color/secondaryTextColor"
-                    app:layout_constraintBottom_toBottomOf="@id/icon_time"
-                    app:layout_constraintStart_toEndOf="@id/icon_time"
-                    app:layout_constraintTop_toTopOf="@id/icon_time" />
 
                 <Button
                     android:id="@+id/button_view_recipe"
@@ -181,5 +162,72 @@
             app:layout_constraintTop_toBottomOf="@id/title_popular_meals"
             tools:listitem="@layout/item_popular_meal" />
 
+        <!-- LOADING -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/loadingLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animationLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/loading_lottie" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- ERROR -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/errorLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/error_image"
+                android:layout_width="280dp"
+                android:layout_height="280dp"
+                android:layout_marginTop="120dp"
+                android:src="@drawable/sad_logo"
+                app:layout_constraintBottom_toTopOf="@+id/error_message_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/error_message_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/plus_jakarta_sans_bold"
+                android:textAlignment="center"
+                android:textColor="@color/secondaryTextColor"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/error_image"
+                tools:text="Something went wrong 😢\nPlease try again later" />
+
+            <!-- optional -->
+            <Button
+                android:id="@+id/btn_retry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/plus_jakarta_sans_medium"
+                android:text="@string/retry"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/error_message_tv" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
