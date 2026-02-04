@@ -29,4 +29,7 @@
     <string name="meal_of_the_day">Meal of the Day</string>
     <string name="popular_meals">Popular Meals</string>
     <string name="view_recipe">View Recipe</string>
+    <string name="what_you_need">What you need</string>
+    <string name="let_s_cook">Let\'s cook!</string>
+    <string name="video">Video</string>
 </resources>

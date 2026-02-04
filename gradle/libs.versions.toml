@@ -1,6 +1,7 @@
 [versions]
 agp = "9.0.0"
 converterGson = "3.0.0"
+core = "13.0.0"
 firebaseBom = "34.8.0"
 glide = "5.0.5"
 junit = "4.13.2"
@@ -22,6 +23,7 @@ segmentedbutton = "3.1.9"
 
 [libraries]
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+core = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:core", version.ref = "core" }
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
