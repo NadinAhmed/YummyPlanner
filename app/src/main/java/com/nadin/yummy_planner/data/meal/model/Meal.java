@@ -1,4 +1,4 @@
-package com.nadin.yummy_planner.models;
+package com.nadin.yummy_planner.data.meal.model;
 
 import java.util.List;
 

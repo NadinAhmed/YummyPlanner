@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashScreen"
-        android:name="com.nadin.yummy_planner.features.splash.SplashScreen"
+        android:name="com.nadin.yummy_planner.presentation.splash.SplashScreen"
         android:label="fragment_splash_screen"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/authScreen"
-        android:name="com.nadin.yummy_planner.features.auth.AuthScreen"
+        android:name="com.nadin.yummy_planner.presentation.auth.view.AuthScreen"
         android:label="fragment_auth_screen"
         tools:layout="@layout/fragment_auth" >
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.nadin.yummy_planner.features.home.HomeFragment"
+        android:name="com.nadin.yummy_planner.presentation.home.view.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
 </navigation>

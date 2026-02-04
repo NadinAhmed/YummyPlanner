@@ -1,9 +1,9 @@
-package com.nadin.yummy_planner.features.auth;
+package com.nadin.yummy_planner.data.auth.datasource;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.nadin.yummy_planner.models.User;
+import com.nadin.yummy_planner.data.auth.model.User;
 import com.nadin.yummy_planner.utils.AuthCallback;
 
 public class AuthDataSource {

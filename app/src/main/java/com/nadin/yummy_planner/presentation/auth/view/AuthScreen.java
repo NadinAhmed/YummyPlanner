@@ -1,4 +1,4 @@
-package com.nadin.yummy_planner.features.auth;
+package com.nadin.yummy_planner.presentation.auth.view;
 
 import android.os.Bundle;
 
@@ -10,12 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import com.addisonelliott.segmentedbutton.SegmentedButton;
 import com.addisonelliott.segmentedbutton.SegmentedButtonGroup;
 import com.nadin.yummy_planner.R;
+import com.nadin.yummy_planner.data.auth.mode.AuthMode;
 import com.nadin.yummy_planner.databinding.FragmentAuthBinding;
+import com.nadin.yummy_planner.presentation.auth.presenter.AuthContract;
+import com.nadin.yummy_planner.presentation.auth.presenter.AuthPresenter;
 import com.nadin.yummy_planner.utils.ViewStateController;
 
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package com.nadin.yummy_planner.features.auth;
+package com.nadin.yummy_planner.data.auth.mode;
 
 public enum AuthMode {
     LOGIN,

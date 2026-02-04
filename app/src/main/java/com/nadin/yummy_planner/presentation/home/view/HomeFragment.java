@@ -1,4 +1,4 @@
-package com.nadin.yummy_planner.features.home;
+package com.nadin.yummy_planner.presentation.home.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nadin.yummy_planner.R;
-import com.nadin.yummy_planner.models.Meal;
+import com.nadin.yummy_planner.data.meal.model.Meal;
 
 import java.util.ArrayList;
 import java.util.List;

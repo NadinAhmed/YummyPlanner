@@ -1,6 +1,7 @@
-package com.nadin.yummy_planner.features.auth;
+package com.nadin.yummy_planner.presentation.auth.presenter;
 
-import com.nadin.yummy_planner.models.User;
+import com.nadin.yummy_planner.data.auth.datasource.AuthDataSource;
+import com.nadin.yummy_planner.data.auth.model.User;
 import com.nadin.yummy_planner.utils.AuthCallback;
 
 public class AuthPresenter implements AuthContract.Presenter{

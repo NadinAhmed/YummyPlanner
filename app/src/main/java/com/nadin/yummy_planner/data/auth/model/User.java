@@ -1,4 +1,4 @@
-package com.nadin.yummy_planner.models;
+package com.nadin.yummy_planner.data.auth.model;
 
 public class User {
     private String id;

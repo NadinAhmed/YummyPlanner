@@ -1,4 +1,4 @@
-package com.nadin.yummy_planner.features.auth;
+package com.nadin.yummy_planner.presentation.auth.presenter;
 
 public interface AuthContract {
     interface View{

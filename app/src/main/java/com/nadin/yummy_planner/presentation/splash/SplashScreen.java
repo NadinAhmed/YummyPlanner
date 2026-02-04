@@ -1,4 +1,4 @@
-package com.nadin.yummy_planner.features.splash;
+package com.nadin.yummy_planner.presentation.splash;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
