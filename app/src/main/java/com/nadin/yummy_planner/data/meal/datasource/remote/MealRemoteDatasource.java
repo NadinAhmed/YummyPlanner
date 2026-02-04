@@ -41,4 +41,30 @@ public class MealRemoteDatasource {
             }
         });
     }
+
+    public void getPopularMeals(MealNetworkResponse callback){
+        api.getPopularMeals().enqueue(new Callback<MealResponse>() {
+            @Override
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    callback.onSuccess(response.body().getMeals());
+                    Log.d("MealRemoteDatasource: ", "onResponse success: " + response.body().getMeals().size() + " meals fetched.");
+                }else{
+                    callback.onError("Error Code: " + response.code());
+                    Log.d("MealRemoteDatasource: ", "onResponse: Error Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MealResponse> call, Throwable t) {
+                if(t instanceof java.io.IOException){
+                    callback.onError("Network failure, please try again");
+                    Log.d("MealRemoteDatasource: ", "onFailure: Network failure, please try again");
+                } else {
+                    callback.onError(t.getMessage());
+                    Log.d("MealRemoteDatasource: ", "onFailure: " + t.getMessage());
+                }
+            }
+        });
+    }
 }

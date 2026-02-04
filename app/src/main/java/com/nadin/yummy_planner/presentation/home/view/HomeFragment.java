@@ -63,11 +63,11 @@ public class HomeFragment extends Fragment implements HomeView {
         mealOfDayDescription = binding.descriptionMeal;
         loadingLayout = binding.loadingLayout;
         errorLayout = binding.errorLayout;
+        popularMealsRecyclerView = binding.recyclerPopularMeals;
+        popularMealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         presenter = new HomePresenterImpl(this);
-        popularMealsRecyclerView = binding.recyclerPopularMeals;
 
-        popularMealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         // Dummy data
         popularMeals = new ArrayList<>();
@@ -76,10 +76,11 @@ public class HomeFragment extends Fragment implements HomeView {
         popularMeals.add(new Meal("3", "Pancakes", "https://images.unsplash.com/photo-1528207776546-365bb710ee93?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", "Breakfast", "International", "Instructions here", "", new ArrayList<>()));
 
 
-        popularMealsAdapter = new PopularMealsAdapter(popularMeals);
+        popularMealsAdapter = new PopularMealsAdapter();
         popularMealsRecyclerView.setAdapter(popularMealsAdapter);
 
         presenter.getRandomMeal();
+        presenter.getPopularMeals();
     }
 
     @Override
@@ -110,8 +111,8 @@ public class HomeFragment extends Fragment implements HomeView {
     }
 
     @Override
-    public void setAllMeals(List<Meal> meals) {
-
+    public void setPopularMeals(List<Meal> meals) {
+        popularMealsAdapter.setPopularMealList(meals);
     }
 
     @Override

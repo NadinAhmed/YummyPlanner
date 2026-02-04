@@ -13,4 +13,8 @@ public class MealRepo {
     public void getRandomMeal(MealNetworkResponse response){
         mealRemoteDatasource.getRandomMeal(response);
     }
+
+    public void getPopularMeals(MealNetworkResponse response){
+        mealRemoteDatasource.getPopularMeals(response);
+    }
 }

@@ -9,6 +9,6 @@ public interface HomeView {
     void hideLoading();
     void showError(String error);
     void setRandomMeal(Meal meal);
-    void setAllMeals(List<Meal> meals);
+    void setPopularMeals(List<Meal> meals);
     void onMealAddToFavSuccess();
 }

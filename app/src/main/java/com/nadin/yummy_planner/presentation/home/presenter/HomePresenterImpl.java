@@ -40,7 +40,19 @@ public class HomePresenterImpl implements HomePresenter{
     }
 
     @Override
-    public void getAllMeals() {
+    public void getPopularMeals() {
+        mealRepo.getPopularMeals(new MealNetworkResponse() {
+            @Override
+            public void onSuccess(List<Meal> meal) {
+                homeView.hideLoading();
+                homeView.setPopularMeals(meal);
+            }
 
+            @Override
+            public void onError(String error) {
+                homeView.hideLoading();
+                homeView.showError(error);
+            }
+        });
     }
 }

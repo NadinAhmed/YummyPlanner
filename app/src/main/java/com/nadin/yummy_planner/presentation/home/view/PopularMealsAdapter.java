@@ -13,14 +13,20 @@ import com.bumptech.glide.Glide;
 import com.nadin.yummy_planner.R;
 import com.nadin.yummy_planner.data.meal.model.Meal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PopularMealsAdapter extends RecyclerView.Adapter<PopularMealsAdapter.ViewHolder> {
 
     private List<Meal> meals;
 
-    public PopularMealsAdapter(List<Meal> meals) {
-        this.meals = meals;
+    public PopularMealsAdapter( ){
+        this.meals = new ArrayList<>();
+    }
+
+    public void setPopularMealList(List<Meal> mealsList) {
+        this.meals = mealsList;
+        notifyDataSetChanged();
     }
 
     @NonNull
