@@ -1,18 +1,36 @@
 package com.nadin.yummy_planner.data.meal.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Meal {
-    private int id;
+    @SerializedName("idMeal")
+    private String id;
+
+    @SerializedName("strMeal")
     private String name;
+
+    @SerializedName("strMealThumb")
     private String imageUrl;
+
+    @SerializedName("strCategory")
     private String category;
+
+    @SerializedName("strArea")
     private String country;
+
+    @SerializedName("strInstructions")
     private String instructions;
+
+    @SerializedName("strYoutube")
     private String youtubeUrl;
     private List<String> ingredients;
 
-    public Meal(int id, String name, String imageUrl, String category, String country,
+    public Meal() {
+    }
+
+    public Meal(String id, String name, String imageUrl, String category, String country,
                 String instructions, String youtubeUrl, List<String> ingredients) {
         this.id = id;
         this.name = name;
@@ -24,11 +42,11 @@ public class Meal {
         this.ingredients = ingredients;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -20,9 +20,9 @@ public class MealRemoteDatasource {
         api.getRandomMeal().enqueue(new Callback<MealResponse>() {
             @Override
             public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
-                if(response.code() == 200){
+                if(response.isSuccessful() && response.body() != null){
                     callback.onSuccess(response.body().getMeals());
-                    Log.d("MealRemoteDatasource: ", "onResponse: " + response.body().getMeals().get(0));
+                    Log.d("MealRemoteDatasource: ", "onResponse success: " + response.body().getMeals().get(0).getName());
                 }else{
                     callback.onError("Error Code: " + response.code());
                     Log.d("MealRemoteDatasource: ", "onResponse: Error Code: " + response.code());

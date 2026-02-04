@@ -3,6 +3,7 @@ package com.nadin.yummy_planner.presentation.home.view;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,13 +71,15 @@ public class HomeFragment extends Fragment implements HomeView {
 
         // Dummy data
         popularMeals = new ArrayList<>();
-        popularMeals.add(new Meal(1, "Avocado Toast", "https://images.unsplash.com/photo-1484723051597-62b8a788a6ac?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", "Breakfast", "International", "Instructions here", "", new ArrayList<>()));
-        popularMeals.add(new Meal(2, "Berry Smoothie", "https://images.unsplash.com/photo-1542884748-2b87b36c6b90?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", "Breakfast", "International", "Instructions here", "", new ArrayList<>()));
-        popularMeals.add(new Meal(3, "Pancakes", "https://images.unsplash.com/photo-1528207776546-365bb710ee93?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", "Breakfast", "International", "Instructions here", "", new ArrayList<>()));
+        popularMeals.add(new Meal("1", "Avocado Toast", "https://images.unsplash.com/photo-1484723051597-62b8a788a6ac?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", "Breakfast", "International", "Instructions here", "", new ArrayList<>()));
+        popularMeals.add(new Meal("2", "Berry Smoothie", "https://images.unsplash.com/photo-1542884748-2b87b36c6b90?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", "Breakfast", "International", "Instructions here", "", new ArrayList<>()));
+        popularMeals.add(new Meal("3", "Pancakes", "https://images.unsplash.com/photo-1528207776546-365bb710ee93?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", "Breakfast", "International", "Instructions here", "", new ArrayList<>()));
 
 
         popularMealsAdapter = new PopularMealsAdapter(popularMeals);
         popularMealsRecyclerView.setAdapter(popularMealsAdapter);
+
+        presenter.getRandomMeal();
     }
 
     @Override
@@ -94,10 +97,11 @@ public class HomeFragment extends Fragment implements HomeView {
         errorLayout.setVisibility(VISIBLE);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void setRandomMeal(Meal meal) {
         mealOfDayTittle.setText(meal.getName());
-        mealOfDayDescription.setText(meal.getInstructions());
+        mealOfDayDescription.setText(meal.getCategory() + " | " + meal.getCountry());
         Glide.with(this)
                 .load(meal.getImageUrl())
                 .placeholder(R.drawable.logo_with_background)
