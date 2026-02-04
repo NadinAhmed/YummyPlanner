@@ -4,10 +4,12 @@
     <color name="backgroundColor">#F8F6F5</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="primaryTextColor">#000000</color>
+    <color name="primaryTextColor">#1C110D</color>
     <color name="secondaryTextColor">#9E5E47</color>
     <color name="borderColor">#E9D5CE</color>
     <color name="itemsBackgroundColor">#FFFFFF</color>
     <color name="gradientEndColor">#00F8F6F5</color>
     <color name="gradientStartColor">#F8F6F5</color>
+    <color name="cardBackgroundColor">#FFFFFF</color>
+    <color name="itemRippleEffect">#1AF94706</color>
 </resources>

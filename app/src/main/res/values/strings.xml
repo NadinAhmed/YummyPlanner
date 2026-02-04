@@ -19,4 +19,14 @@
     <string name="join_our_family">Join our Family!</string>
     <string name="retry">Retry</string>
     <string name="name">Name</string>
+    <string name="home">Home</string>
+    <string name="explore">Explore</string>
+    <string name="planner">Planner</string>
+    <string name="favorites">Favorites</string>
+    <string name="profile">Profile</string>
+    <string name="hi_there">Hi there!</string>
+    <string name="ready_to_cook">Ready to cook?</string>
+    <string name="meal_of_the_day">Meal of the Day</string>
+    <string name="popular_meals">Popular Meals</string>
+    <string name="view_recipe">View Recipe</string>
 </resources>

@@ -118,7 +118,7 @@ public class AuthScreen extends Fragment implements AuthContract.View {
     public void onSuccess() {
         Log.d("AuthScreen", "onSuccess: ");
         //navigate to main screen
-
+        androidx.navigation.fragment.NavHostFragment.findNavController(this).navigate(R.id.action_authScreen_to_homeFragment);
     }
 
     @Override

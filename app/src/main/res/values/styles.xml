@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="CustomTextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <!-- border -->
         <item name="boxStrokeColor">@color/secondaryTextColor</item>
@@ -66,5 +67,19 @@
 
         <item name="android:paddingTop">12dp</item>
         <item name="android:paddingBottom">12dp</item>
+    </style>
+
+    <style name="MyNavBarStyle" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemActiveIndicatorStyle">@style/MyActiveIndicator</item>
+    </style>
+
+    <style name="MyActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/itemRippleEffect</item>
+        <item name="shapeAppearance">@style/RoundedIndicator</item>
+    </style>
+
+    <style name="RoundedIndicator" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
     </style>
 </resources>

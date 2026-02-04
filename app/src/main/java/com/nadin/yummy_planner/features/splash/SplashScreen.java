@@ -20,10 +20,10 @@ import com.nadin.yummy_planner.R;
 @SuppressLint("CustomSplashScreen")
 public class SplashScreen extends Fragment {
 
-    //edit it from firebase
+    //TODO: check from firebase if user is logged in
     boolean isLoggedIn = false;
     int destination = isLoggedIn
-            ? R.id.action_splashScreen_to_authScreen
+            ? R.id.action_splashScreen_to_homeFragment
             : R.id.action_splashScreen_to_authScreen;
     NavController navController;
 
