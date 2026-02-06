@@ -51,4 +51,9 @@
             android:name="meal"
             app:argType="com.nadin.yummy_planner.data.meal.model.Meal" />
     </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.nadin.yummy_planner.presentation.favourite.view.FavouriteFragment"
+        android:label="fragment_favourite"
+        tools:layout="@layout/fragment_favourite" />
 </navigation>

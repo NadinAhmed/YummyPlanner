@@ -32,4 +32,6 @@
     <string name="what_you_need">What you need</string>
     <string name="let_s_cook">Let\'s cook!</string>
     <string name="video">Video</string>
+    <string name="my_favorites">My Favorites</string>
+    <string name="remove">Remove</string>
 </resources>
