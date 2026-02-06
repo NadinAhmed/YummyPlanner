@@ -12,5 +12,5 @@
     <color name="gradientEndColor">#0023140F</color>
     <color name="gradientStartColor">#23140F</color>
     <color name="cardBackgroundColor">#36201A</color>
-    <color name="itemRippleEffect">#1AF94706</color>
+    <color name="itemRippleEffect">#36201A</color>
 </resources>

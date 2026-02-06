@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/backgroundColor"
     tools:context=".presentation.meal_details.view.MealDetailsFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -176,11 +176,13 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/plus_jakarta_sans_bold"
                     android:text="Add to Plan"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
                     app:cornerRadius="24dp"
                     app:icon="@drawable/planner_icon"
                     app:iconPadding="@null"
-                    app:iconSize="22dp" />
+                    app:iconSize="22dp"
+                    app:iconTint="@color/white" />
             </LinearLayout>
 
         </LinearLayout>
