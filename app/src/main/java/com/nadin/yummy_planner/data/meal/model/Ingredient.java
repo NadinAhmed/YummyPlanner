@@ -2,18 +2,18 @@ package com.nadin.yummy_planner.data.meal.model;
 
 public class Ingredient {
     private String name;
-    private String quantity;
+    private String measure;
 
-    public Ingredient(String name, String quantity) {
+    public Ingredient(String name, String measure) {
         this.name = name;
-        this.quantity = quantity;
+        this.measure = measure;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getQuantity() {
-        return quantity;
+    public String getMeasure() {
+        return measure;
     }
 }

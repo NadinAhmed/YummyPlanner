@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getId() == R.id.splashScreen || destination.getId() == R.id.authScreen) {
+            if (destination.getId() == R.id.splashScreen || destination.getId() == R.id.authScreen || destination.getId() == R.id.homeFragment || destination.getId() == R.id.mealDetailsFragment) {
                 bottomNavigationView.setVisibility(View.GONE);
             } else {
                 bottomNavigationView.setVisibility(View.VISIBLE);

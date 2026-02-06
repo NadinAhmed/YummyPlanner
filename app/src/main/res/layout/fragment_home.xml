@@ -77,22 +77,35 @@
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/logo_with_background"
+                    android:src="@drawable/logo"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/icon_favorite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@color/cardBackgroundColor"
-                    android:padding="4dp"
-                    android:src="@drawable/favourite_icon"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/favoriteCardView"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="12dp"
+                    app:cardCornerRadius="50dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:strokeColor="@color/itemRippleEffect"
+                    android:backgroundTint="@color/cardBackgroundColor"
+                    app:strokeWidth="1dp">
+
+                    <ImageView
+                        android:id="@+id/favorite_button"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/favourite_icon"
+                        android:background="?attr/selectableItemBackground"
+                        android:tint="@color/primaryColor" />
+
+                </com.google.android.material.card.MaterialCardView>
 
                 <TextView
                     android:id="@+id/title_meal"

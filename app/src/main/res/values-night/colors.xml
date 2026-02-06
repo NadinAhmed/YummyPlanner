@@ -5,6 +5,7 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="primaryTextColor">#FCF9F8</color>
+    <color name="primaryTextColorWithOp">#FCFCF9F8</color>
     <color name="secondaryTextColor">#DCBDB4</color>
     <color name="borderColor">#52352B</color>
     <color name="itemsBackgroundColor">#2F1B15</color>

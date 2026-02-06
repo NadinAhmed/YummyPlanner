@@ -3,11 +3,13 @@ package com.nadin.yummy_planner.presentation.meal_details.view;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.nadin.yummy_planner.R;
 import com.nadin.yummy_planner.data.meal.model.Ingredient;
 
@@ -32,7 +34,11 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Ingredient ingredient = ingredients.get(position);
         holder.name.setText(ingredient.getName());
-        holder.quantity.setText(ingredient.getQuantity());
+        holder.quantity.setText(ingredient.getMeasure());
+        Glide.with(holder.itemView.getContext())
+                .load("https://www.themealdb.com/images/ingredients/" + ingredient.getName().trim().replace("\\s+", "-") + ".png")
+                .placeholder(R.drawable.logo)
+                .into(holder.image);
     }
 
     @Override
@@ -41,13 +47,15 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView image;
         TextView name;
         TextView quantity;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            image = itemView.findViewById(R.id.ingredient_image);
             name = itemView.findViewById(R.id.ingredient_name);
-            quantity = itemView.findViewById(R.id.ingredient_quantity);
+            quantity = itemView.findViewById(R.id.ingredient_measure);
         }
     }
 }

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,16 +13,37 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.material.chip.Chip;
+import com.nadin.yummy_planner.R;
+import com.nadin.yummy_planner.data.meal.model.Meal;
 import com.nadin.yummy_planner.databinding.FragmentMealDetailsBinding;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MealDetailsFragment extends Fragment {
 
     private FragmentMealDetailsBinding binding;
     private RecyclerView ingredientsRecyclerView;
+    private StepsAdapter stepsAdapter;
+    private Meal meal;
+    ImageView mealImageView;
+    TextView mealNameTextView;
+    Chip mealAreaChip;
+    Chip mealCategoryChip;
+    YouTubePlayerView mealYoutubePlayerView;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(getArguments() != null){
+            meal = (Meal) getArguments().getSerializable("meal");
+        }
     }
 
     @Override
@@ -34,5 +57,56 @@ public class MealDetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ingredientsRecyclerView = binding.ingredientsRecyclerView;
         ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        stepsAdapter = new StepsAdapter();
+        binding.stepsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.stepsRecyclerView.setAdapter(stepsAdapter);
+
+
+        mealImageView = binding.mealImage;
+        mealNameTextView = binding.mealName;
+        mealAreaChip = binding.chipArea;
+        mealCategoryChip = binding.chipCategory;
+        mealYoutubePlayerView = binding.youtubeVideo;
+
+        if(meal != null){
+            Glide.with(this)
+                    .load(meal.getImageUrl())
+                    .placeholder(R.drawable.logo)
+                    .error(R.drawable.logo)
+                    .into(mealImageView);
+            mealNameTextView.setText(meal.getName());
+            mealAreaChip.setText(meal.getCountry());
+            mealCategoryChip.setText(meal.getCategory());
+
+            String instructions = meal.getInstructions();
+            if (instructions != null && !instructions.isEmpty()) {
+                List<String> steps = new ArrayList<>();
+                if (instructions.contains("step 1")) {
+                    String[] stepsArray = instructions.split("step \\d+\\r?\\n");
+                    for (String step : stepsArray) {
+                        String trimmedStep = step.trim();
+                        if (!trimmedStep.isEmpty()) {
+                            steps.add(trimmedStep.replaceAll("\\r?\\n\\r?\\n", "").replaceFirst("^\\d+\\.\\s*", ""));
+                        }
+                    }
+                } else {
+                    String[] stepsArray = instructions.split("\\r?\\n");
+                    for (String step : stepsArray) {
+                        if (!step.trim().isEmpty()) {
+                            steps.add(step.trim().replaceFirst("^\\d+\\.\\s*", ""));
+                        }
+                    }
+                }
+                stepsAdapter.setSteps(steps);
+            }
+
+            mealYoutubePlayerView.getYouTubePlayerWhenReady(youTubePlayer -> {
+                String videoId = meal.getYoutubeUrl().substring(meal.getYoutubeUrl().lastIndexOf("/") + 1);
+                youTubePlayer.cueVideo(videoId, 0);
+            });
+             IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(meal.getIngredientsList());
+            ingredientsRecyclerView.setAdapter(ingredientsAdapter);
+        }
     }
 }
