@@ -1,5 +1,7 @@
 package com.nadin.yummy_planner.presentation.home.presenter;
 
+import android.content.Context;
+
 import com.nadin.yummy_planner.data.meal.MealRepo;
 import com.nadin.yummy_planner.data.meal.datasource.remote.MealNetworkResponse;
 import com.nadin.yummy_planner.data.meal.datasource.remote.MealRemoteDatasource;
@@ -12,9 +14,9 @@ public class HomePresenterImpl implements HomePresenter{
     HomeView homeView;
     MealRepo mealRepo;
 
-    public HomePresenterImpl(HomeView homeView){
+    public HomePresenterImpl(HomeView homeView, Context context){
         this.homeView = homeView;
-        mealRepo = new MealRepo();
+        mealRepo = new MealRepo(context);
     }
 
     @Override

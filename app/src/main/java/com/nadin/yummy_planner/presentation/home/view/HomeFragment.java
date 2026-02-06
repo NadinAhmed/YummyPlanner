@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment implements HomeView {
             Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_mealDetailsFragment, bundle);
         });
 
-        presenter = new HomePresenterImpl(this);
+        presenter = new HomePresenterImpl(this, getContext());
 
         popularMealsAdapter = new PopularMealsAdapter();
         popularMealsRecyclerView.setAdapter(popularMealsAdapter);

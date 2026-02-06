@@ -15,16 +15,17 @@ import com.google.android.material.button.MaterialButton;
 import com.nadin.yummy_planner.R;
 import com.nadin.yummy_planner.data.meal.model.Meal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.ViewHolder> {
 
     private List<Meal> meals;
-    private OnRemoveClickListener onRemoveClickListener;
+    private OnDeleteClickListener listener;
 
-    public FavouriteAdapter(List<Meal> meals) {
-        this.meals = meals;
-        //this.onRemoveClickListener = onRemoveClickListener;
+    public FavouriteAdapter(OnDeleteClickListener listener) {
+        this.meals = new ArrayList<>();
+        this.listener = listener;
     }
 
     @NonNull
@@ -45,7 +46,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.View
                 .placeholder(R.drawable.logo)
                 .error(R.drawable.logo)
                 .into(holder.mealImageView);
-        //holder.removeButton.setOnClickListener(v -> onRemoveClickListener.onRemoveClick(meal));
+        holder.removeButton.setOnClickListener(v -> listener.onDeleteClicked(meal));
     }
 
     @Override
@@ -71,9 +72,5 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.View
             mealInfoTextView = itemView.findViewById(R.id.mealInfoTextView);
             removeButton = itemView.findViewById(R.id.removeButton);
         }
-    }
-
-    public interface OnRemoveClickListener {
-        void onRemoveClick(Meal meal);
     }
 }
