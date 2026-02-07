@@ -21,11 +21,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.card.MaterialCardView;
 import com.nadin.yummy_planner.R;
 import com.nadin.yummy_planner.data.meal.model.Meal;
 import com.nadin.yummy_planner.databinding.FragmentHomeBinding;
 import com.nadin.yummy_planner.presentation.home.presenter.HomePresenter;
 import com.nadin.yummy_planner.presentation.home.presenter.HomePresenterImpl;
+import com.nadin.yummy_planner.utils.SuccessDialog;
 
 import java.util.List;
 
@@ -41,6 +43,8 @@ public class HomeFragment extends Fragment implements HomeView {
     private Button viewRecipe;
     private ConstraintLayout loadingLayout;
     private ConstraintLayout errorLayout;
+    private MaterialCardView favButton;
+    private SuccessDialog successDialog;
     private Meal currentMeal;
 
     @Override
@@ -66,6 +70,7 @@ public class HomeFragment extends Fragment implements HomeView {
         viewRecipe = binding.buttonViewRecipe;
         popularMealsRecyclerView = binding.recyclerPopularMeals;
         popularMealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        favButton = binding.favoriteCardView;
 
         viewRecipe.setOnClickListener(v -> {
             Bundle bundle =  new Bundle();
@@ -73,10 +78,18 @@ public class HomeFragment extends Fragment implements HomeView {
             Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_mealDetailsFragment, bundle);
         });
 
+        successDialog = new SuccessDialog();
         presenter = new HomePresenterImpl(this, getContext());
 
         popularMealsAdapter = new PopularMealsAdapter();
         popularMealsRecyclerView.setAdapter(popularMealsAdapter);
+
+        favButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.addMealToFav(currentMeal);
+            }
+        });
 
         presenter.getRandomMeal();
         presenter.getPopularMeals();
@@ -117,6 +130,6 @@ public class HomeFragment extends Fragment implements HomeView {
 
     @Override
     public void onMealAddToFavSuccess() {
-
+        successDialog.show(requireContext(), getString(R.string.add_to_fav_success_msg));
     }
 }

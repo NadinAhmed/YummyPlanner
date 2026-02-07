@@ -103,7 +103,7 @@
                         android:layout_gravity="center"
                         android:src="@drawable/favourite_icon"
                         android:background="?attr/selectableItemBackground"
-                        android:tint="@color/primaryColor" />
+                        app:tint="@color/primaryColor" />
 
                 </com.google.android.material.card.MaterialCardView>
 

@@ -37,6 +37,8 @@
             android:textColor="@color/primaryTextColor"
             android:textAlignment="center"
             android:textSize="18sp"
+            android:maxLines="2"
+            android:ellipsize="end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mealImageView" />
@@ -60,7 +62,7 @@
             android:id="@+id/removeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="90dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/primaryColor"
             android:fontFamily="@font/plus_jakarta_sans_semibold"
@@ -70,7 +72,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mealInfoTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/mealImageView"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

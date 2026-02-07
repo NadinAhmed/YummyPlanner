@@ -19,7 +19,7 @@ import com.nadin.yummy_planner.presentation.favourite.presenter.FavouritePresent
 
 import java.util.List;
 
-public class FavouriteFragment extends Fragment implements FavouriteVew {
+public class FavouriteFragment extends Fragment{
     private FragmentFavouriteBinding binding;
     private RecyclerView favouriteRecyclerView;
     private FavouriteAdapter adapter;
@@ -44,7 +44,7 @@ public class FavouriteFragment extends Fragment implements FavouriteVew {
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         favouriteRecyclerView.setLayoutManager(layoutManager);
 
-        presenter = new FavouritePresenterImpl(getContext(), this);
+        presenter = new FavouritePresenterImpl(getContext());
         presenter.getAllFavMeals().observe(getViewLifecycleOwner(), new Observer<List<Meal>>() {
             @Override
             public void onChanged(List<Meal> meals) {
@@ -52,17 +52,12 @@ public class FavouriteFragment extends Fragment implements FavouriteVew {
             }
         });
 
-        adapter = new FavouriteAdapter(new OnDeleteClickListener() {
+        adapter = new FavouriteAdapter(requireContext(),new OnDeleteClickListener() {
             @Override
             public void onDeleteClicked(Meal meal) {
                 presenter.deleteFromFav(meal);
             }
         });
         favouriteRecyclerView.setAdapter(adapter);
-    }
-
-    @Override
-    public void onDeleteMeal() {
-        //TODO show dialog to confirm
     }
 }

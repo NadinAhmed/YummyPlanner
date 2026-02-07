@@ -38,7 +38,8 @@ public class HomePresenterImpl implements HomePresenter{
 
     @Override
     public void addMealToFav(Meal meal) {
-
+        mealRepo.addToFavourite(meal);
+        homeView.onMealAddToFavSuccess();
     }
 
     @Override

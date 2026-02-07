@@ -14,27 +14,36 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
 import com.nadin.yummy_planner.R;
 import com.nadin.yummy_planner.data.meal.model.Meal;
 import com.nadin.yummy_planner.databinding.FragmentMealDetailsBinding;
+import com.nadin.yummy_planner.presentation.meal_details.presenter.MealDetailsPresenter;
+import com.nadin.yummy_planner.presentation.meal_details.presenter.MealDetailsPresenterImpl;
+import com.nadin.yummy_planner.utils.SuccessDialog;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MealDetailsFragment extends Fragment {
+public class MealDetailsFragment extends Fragment implements MealDetailsView{
 
     private FragmentMealDetailsBinding binding;
     private RecyclerView ingredientsRecyclerView;
     private StepsAdapter stepsAdapter;
     private Meal meal;
-    ImageView mealImageView;
-    TextView mealNameTextView;
-    Chip mealAreaChip;
-    Chip mealCategoryChip;
-    YouTubePlayerView mealYoutubePlayerView;
+    private ImageView mealImageView;
+    private TextView mealNameTextView;
+    private Chip mealAreaChip;
+    private Chip mealCategoryChip;
+    private YouTubePlayerView mealYoutubePlayerView;
+    private MaterialCardView favCard;
+    private SuccessDialog successDialog;
+    private MealDetailsPresenter presenter;
 
 
     @Override
@@ -68,6 +77,9 @@ public class MealDetailsFragment extends Fragment {
         mealAreaChip = binding.chipArea;
         mealCategoryChip = binding.chipCategory;
         mealYoutubePlayerView = binding.youtubeVideo;
+        favCard = binding.favoriteButtonContainer;
+        successDialog = new SuccessDialog();
+        presenter = new MealDetailsPresenterImpl(requireContext(), this);
 
         if(meal != null){
             Glide.with(this)
@@ -101,12 +113,29 @@ public class MealDetailsFragment extends Fragment {
                 stepsAdapter.setSteps(steps);
             }
 
-            mealYoutubePlayerView.getYouTubePlayerWhenReady(youTubePlayer -> {
-                String videoId = meal.getYoutubeUrl().substring(meal.getYoutubeUrl().lastIndexOf("/") + 1);
-                youTubePlayer.cueVideo(videoId, 0);
+            getLifecycle().addObserver(mealYoutubePlayerView);
+
+            mealYoutubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                @Override
+                public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                    String videoId = "S0Q4gqBUs7c";
+                    youTubePlayer.cueVideo(videoId, 0);
+                }
             });
-             IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(meal.getIngredientsList());
+
+            favCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    presenter.addMealToFav(meal);
+                }
+            });
+             IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(meal.getIngredients());
             ingredientsRecyclerView.setAdapter(ingredientsAdapter);
         }
+    }
+
+    @Override
+    public void onMealAddToFavSuccess() {
+        successDialog.show(requireContext(), getString(R.string.add_to_fav_success_msg));
     }
 }

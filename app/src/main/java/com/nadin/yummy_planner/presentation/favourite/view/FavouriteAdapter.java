@@ -1,6 +1,7 @@
 package com.nadin.yummy_planner.presentation.favourite.view;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.nadin.yummy_planner.R;
 import com.nadin.yummy_planner.data.meal.model.Meal;
+import com.nadin.yummy_planner.utils.RemoveDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +23,13 @@ import java.util.List;
 public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.ViewHolder> {
 
     private List<Meal> meals;
+    private Context context;
     private OnDeleteClickListener listener;
 
-    public FavouriteAdapter(OnDeleteClickListener listener) {
+    public FavouriteAdapter(Context context, OnDeleteClickListener listener) {
         this.meals = new ArrayList<>();
         this.listener = listener;
+        this.context = context;
     }
 
     @NonNull
@@ -46,7 +50,10 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.View
                 .placeholder(R.drawable.logo)
                 .error(R.drawable.logo)
                 .into(holder.mealImageView);
-        holder.removeButton.setOnClickListener(v -> listener.onDeleteClicked(meal));
+        holder.removeButton.setOnClickListener(v -> {
+            RemoveDialog removeDialog = new RemoveDialog();
+            removeDialog.show(context, context.getString(R.string.remove_from_fav_msg), () -> listener.onDeleteClicked(meal));
+        });
     }
 
     @Override

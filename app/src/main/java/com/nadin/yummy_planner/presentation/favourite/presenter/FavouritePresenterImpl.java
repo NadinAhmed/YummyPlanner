@@ -6,16 +6,13 @@ import androidx.lifecycle.LiveData;
 
 import com.nadin.yummy_planner.data.meal.MealRepo;
 import com.nadin.yummy_planner.data.meal.model.Meal;
-import com.nadin.yummy_planner.presentation.favourite.view.FavouriteVew;
 
 import java.util.List;
 
 public class FavouritePresenterImpl implements FavouritePresenter{
-    FavouriteVew favView;
     MealRepo repo;
 
-    public FavouritePresenterImpl(Context context, FavouriteVew favView){
-        this.favView = favView;
+    public FavouritePresenterImpl(Context context){
         repo = new MealRepo(context);
     }
 
@@ -27,6 +24,5 @@ public class FavouritePresenterImpl implements FavouritePresenter{
     @Override
     public void deleteFromFav(Meal meal) {
         repo.deleteFromFavourite(meal);
-        favView.onDeleteMeal();
     }
 }

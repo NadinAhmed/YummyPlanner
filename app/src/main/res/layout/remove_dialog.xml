@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/remove_dialog"
+    android:layout_width="340dp"
+    android:layout_height="430dp"
+    app:cardCornerRadius="24dp"
+    app:strokeWidth="3dp"
+    app:strokeColor="@color/borderColor"
+    android:backgroundTint="@color/cardBackgroundColor">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/remove_image"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/sad_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/remove_dialog_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/plus_jakarta_sans_bold"
+            android:text="remove"
+            android:textAlignment="center"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/remove_image" />
+
+        <Button
+            android:id="@+id/confirm_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/confirm"
+            android:fontFamily="@font/plus_jakarta_sans_bold"
+            app:layout_constraintBottom_toBottomOf="@+id/cancel_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/cancel_btn"
+            app:layout_constraintTop_toTopOf="@+id/cancel_btn" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/backgroundColor"
+            android:fontFamily="@font/plus_jakarta_sans_bold"
+            android:text="@string/cancel"
+            android:textColor="@color/primaryColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/confirm_btn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/remove_image"
+            app:strokeColor="@color/primaryColor"
+            app:strokeWidth="1dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView >

@@ -1,8 +1,11 @@
 package com.nadin.yummy_planner.data.meal.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -11,10 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(tableName = "FavMeals")
+@TypeConverters(IngredientsTypeConverter.class)
 public class Meal implements Serializable {
     @SerializedName("idMeal")
     @ColumnInfo(name = "id")
     @PrimaryKey
+    @NonNull
     private String id;
 
     @SerializedName("strMeal")
@@ -39,133 +44,135 @@ public class Meal implements Serializable {
     @SerializedName("strYoutube")
     @ColumnInfo(name = "youtubeUrl")
     private String youtubeUrl;
+    @Ignore
     @SerializedName("strIngredient1")
-    @ColumnInfo(name = "strIngredient1")
     String strIngredient1;
-    @ColumnInfo(name = "strIngredient2")
+    @Ignore
     @SerializedName("strIngredient2")
     String strIngredient2;
-    @ColumnInfo(name = "strIngredient3")
+    @Ignore
     @SerializedName("strIngredient3")
     String strIngredient3;
-    @ColumnInfo(name = "strIngredient4")
+    @Ignore
     @SerializedName("strIngredient4")
     String strIngredient4;
-    @ColumnInfo(name = "strIngredient5")
+    @Ignore
     @SerializedName("strIngredient5")
     String strIngredient5;
-    @ColumnInfo(name = "strIngredient6")
+    @Ignore
     @SerializedName("strIngredient6")
     String strIngredient6;
-    @ColumnInfo(name = "strIngredient7")
+    @Ignore
     @SerializedName("strIngredient7")
     String strIngredient7;
-    @ColumnInfo(name = "strIngredient8")
+    @Ignore
     @SerializedName("strIngredient8")
     String strIngredient8;
-    @ColumnInfo(name = "strIngredient9")
+    @Ignore
     @SerializedName("strIngredient9")
     String strIngredient9;
-    @ColumnInfo(name = "strIngredient10")
+    @Ignore
     @SerializedName("strIngredient10")
     String strIngredient10;
-    @ColumnInfo(name = "strIngredient11")
+    @Ignore
     @SerializedName("strIngredient11")
     String strIngredient11;
-    @ColumnInfo(name = "strIngredient12")
+    @Ignore
     @SerializedName("strIngredient12")
     String strIngredient12;
-    @ColumnInfo(name = "strIngredient13")
+    @Ignore
     @SerializedName("strIngredient13")
     String strIngredient13;
-    @ColumnInfo(name = "strIngredient14")
+    @Ignore
     @SerializedName("strIngredient14")
     String strIngredient14;
-    @ColumnInfo(name = "strIngredient15")
+    @Ignore
     @SerializedName("strIngredient15")
     String strIngredient15;
-    @ColumnInfo(name = "strIngredient16")
+    @Ignore
     @SerializedName("strIngredient16")
     String strIngredient16;
-    @ColumnInfo(name = "strIngredient17")
+    @Ignore
     @SerializedName("strIngredient17")
     String strIngredient17;
-    @ColumnInfo(name = "strIngredient18")
+    @Ignore
     @SerializedName("strIngredient18")
     String strIngredient18;
-    @ColumnInfo(name = "strIngredient19")
+    @Ignore
     @SerializedName("strIngredient19")
     String strIngredient19;
-    @ColumnInfo(name = "strIngredient20")
+    @Ignore
     @SerializedName("strIngredient20")
     String strIngredient20;
-
-    @ColumnInfo(name = "strMeasure1")
+    @Ignore
     @SerializedName("strMeasure1")
     String strMeasure1;
-    @ColumnInfo(name = "strMeasure2")
+    @Ignore
     @SerializedName("strMeasure2")
     String strMeasure2;
-    @ColumnInfo(name = "strMeasure3")
+    @Ignore
     @SerializedName("strMeasure3")
     String strMeasure3;
-    @ColumnInfo(name = "strMeasure4")
+    @Ignore
     @SerializedName("strMeasure4")
     String strMeasure4;
-    @ColumnInfo(name = "strMeasure5")
+    @Ignore
     @SerializedName("strMeasure5")
     String strMeasure5;
-    @ColumnInfo(name = "strMeasure6")
+    @Ignore
     @SerializedName("strMeasure6")
     String strMeasure6;
-    @ColumnInfo(name = "strMeasure7")
+    @Ignore
     @SerializedName("strMeasure7")
     String strMeasure7;
-    @ColumnInfo(name = "strMeasure8")
+    @Ignore
     @SerializedName("strMeasure8")
     String strMeasure8;
-    @ColumnInfo(name = "strMeasure9")
+    @Ignore
     @SerializedName("strMeasure9")
     String strMeasure9;
-    @ColumnInfo(name = "strMeasure10")
+    @Ignore
     @SerializedName("strMeasure10")
     String strMeasure10;
-    @ColumnInfo(name = "strMeasure11")
+    @Ignore
     @SerializedName("strMeasure11")
     String strMeasure11;
-    @ColumnInfo(name = "strMeasure12")
+    @Ignore
     @SerializedName("strMeasure12")
     String strMeasure12;
-    @ColumnInfo(name = "strMeasure13")
+    @Ignore
     @SerializedName("strMeasure13")
     String strMeasure13;
-    @ColumnInfo(name = "strMeasure14")
+    @Ignore
     @SerializedName("strMeasure14")
     String strMeasure14;
-    @ColumnInfo(name = "strMeasure15")
+    @Ignore
     @SerializedName("strMeasure15")
     String strMeasure15;
-    @ColumnInfo(name = "strMeasure16")
+    @Ignore
     @SerializedName("strMeasure16")
     String strMeasure16;
-    @ColumnInfo(name = "strMeasure17")
+    @Ignore
     @SerializedName("strMeasure17")
     String strMeasure17;
-    @ColumnInfo(name = "strMeasure18")
+    @Ignore
     @SerializedName("strMeasure18")
     String strMeasure18;
-    @ColumnInfo(name = "strMeasure19")
+    @Ignore
     @SerializedName("strMeasure19")
     String strMeasure19;
-    @ColumnInfo(name = "strMeasure20")
+    @Ignore
     @SerializedName("strMeasure20")
     String strMeasure20;
+
+    @ColumnInfo(name = "ingredients")
+    private List<Ingredient> ingredients;
 
     public Meal() {
     }
 
     public Meal(String id, String name, String imageUrl, String category, String country,
-                String instructions, String youtubeUrl, List<String> ingredients) {
+                String instructions, String youtubeUrl, List<Ingredient> ingredients) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
@@ -173,6 +180,7 @@ public class Meal implements Serializable {
         this.country = country;
         this.instructions = instructions;
         this.youtubeUrl = youtubeUrl;
+        this.ingredients = ingredients;
     }
 
     public String getId() {
@@ -231,8 +239,7 @@ public class Meal implements Serializable {
         this.youtubeUrl = youtubeUrl;
     }
 
-    public List<Ingredient> getIngredientsList() {
-
+    public List<Ingredient> getIngredients() {
         List<Ingredient> ingredients = new ArrayList<>();
 
         String[] ingredientArray = {
@@ -266,5 +273,9 @@ public class Meal implements Serializable {
         }
 
         return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }
