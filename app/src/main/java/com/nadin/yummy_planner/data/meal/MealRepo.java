@@ -8,6 +8,7 @@ import com.nadin.yummy_planner.data.meal.datasource.local.MealLocalDatasource;
 import com.nadin.yummy_planner.data.meal.datasource.remote.MealNetworkResponse;
 import com.nadin.yummy_planner.data.meal.datasource.remote.MealRemoteDatasource;
 import com.nadin.yummy_planner.data.meal.model.Meal;
+import com.nadin.yummy_planner.data.meal.model.PlannerMeal;
 
 import java.util.List;
 
@@ -38,5 +39,17 @@ public class MealRepo {
 
     public LiveData<List<Meal>> getAllFavMeals(){
         return mealLocalDatasource.getAllFavMeals();
+    }
+
+    public void addMealToPlanner(Meal meal, long date) {
+        mealLocalDatasource.addMealToPlanner(meal, date);
+    }
+
+    public void removeMealFromPlanner(PlannerMeal meal) {
+        mealLocalDatasource.removeMealFromPlanner(meal);
+    }
+
+    public LiveData<List<PlannerMeal>> getMealByDate(long date) {
+        return mealLocalDatasource.getMealByDate(date);
     }
 }

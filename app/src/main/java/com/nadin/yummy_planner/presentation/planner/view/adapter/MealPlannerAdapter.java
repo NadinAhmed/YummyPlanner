@@ -12,15 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.nadin.yummy_planner.R;
 import com.nadin.yummy_planner.data.meal.model.Meal;
+import com.nadin.yummy_planner.data.meal.model.PlannerMeal;
+import com.nadin.yummy_planner.presentation.planner.view.OnClickListener;
 
 import java.util.List;
 
 public class MealPlannerAdapter extends RecyclerView.Adapter<MealPlannerAdapter.ViewHolder> {
 
-    private List<Meal> meals;
+    private List<PlannerMeal> meals;
+    private OnClickListener onClickListener;
 
-    public MealPlannerAdapter(List<Meal> meals) {
+    public MealPlannerAdapter(List<PlannerMeal> meals, OnClickListener onClickListener) {
         this.meals = meals;
+        this.onClickListener = onClickListener;
     }
 
     @NonNull
@@ -32,7 +36,8 @@ public class MealPlannerAdapter extends RecyclerView.Adapter<MealPlannerAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Meal meal = meals.get(position);
+        PlannerMeal plannerMeal = meals.get(position);
+        Meal meal = plannerMeal.getMeal();
         holder.title.setText(meal.getName());
         if (meal.getCategory() != null && meal.getCountry() != null) {
             String description = meal.getCategory() + " | " + meal.getCountry();
@@ -47,6 +52,8 @@ public class MealPlannerAdapter extends RecyclerView.Adapter<MealPlannerAdapter.
                 .placeholder(R.drawable.logo)
                 .error(R.drawable.logo)
                 .into(holder.image);
+
+        holder.deleteIcon.setOnClickListener(v -> onClickListener.onRemoveMealClick(plannerMeal));
     }
 
     @Override
