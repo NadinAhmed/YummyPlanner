@@ -1,5 +1,6 @@
 package com.nadin.yummy_planner.presentation.meal_details.view;
 
+import android.app.Notification;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -139,7 +140,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
                 @Override
                 public void onClick(View v) {
                     Calendar calendar = Calendar.getInstance();
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), (view, year, month, dayOfMonth) -> {
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), R.style.CustomDatePickerTheme, (view, year, month, dayOfMonth) -> {
                         Calendar selectedDate = Calendar.getInstance();
                         selectedDate.set(year, month, dayOfMonth);
                         selectedDate.set(Calendar.HOUR_OF_DAY, 0);

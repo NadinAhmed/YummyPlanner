@@ -82,4 +82,19 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>
     </style>
+
+    <style name="CustomDatePickerTheme" parent="Theme.MaterialComponents.DayNight.Dialog">
+        <!-- Header color -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <!-- Background color -->
+        <item name="android:windowBackground">@color/itemsBackgroundColor</item>
+
+        <!-- Button text color -->
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+
+        <!-- Control color - for buttons and selectors -->
+        <item name="colorAccent">@color/primaryColor</item>
+    </style>
 </resources>
