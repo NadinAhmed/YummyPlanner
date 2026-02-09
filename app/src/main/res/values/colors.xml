@@ -14,4 +14,5 @@
     <color name="cardBackgroundColor">#FFFFFF</color>
     <color name="itemRippleEffect">#1AF94706</color>
     <color name="calenderColor">#1C110D</color>
+    <color name="searchBackgroundColor">#FFFFFF</color>
 </resources>

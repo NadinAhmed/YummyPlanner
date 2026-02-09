@@ -43,4 +43,8 @@
     <string name="remove_from_plan_msg">This meal will be removed.\nDo you want to continue?</string>
     <string name="current_week">Current Week</string>
     <string name="no_meals_for_this_day">No meals for this day</string>
+    <string name="search_hint">What are you craving?</string>
+    <string name="categories">Categories</string>
+    <string name="countries">Countries</string>
+    <string name="ingredients">Ingredients</string>
 </resources>
