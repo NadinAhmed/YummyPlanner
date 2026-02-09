@@ -12,18 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.nadin.yummy_planner.R;
-import com.nadin.yummy_planner.data.explore.Category;
+import com.nadin.yummy_planner.data.meal.model.Meal;
 
 import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CategoryViewHolder> {
 
     private Context context;
-    private List<Category> categories;
+    private List<Meal> meals;
 
-    public SearchAdapter(Context context, List<Category> categories) {
+    public SearchAdapter(Context context, List<Meal> meals) {
         this.context = context;
-        this.categories = categories;
+        this.meals = meals;
     }
 
     @NonNull
@@ -35,17 +35,19 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CategoryVi
 
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
-        Category category = categories.get(position);
-        holder.categoryName.setText(category.getName());
-        holder.recipesCount.setText(category.getRecipeCount());
+        Meal meal = meals.get(position);
+        holder.categoryName.setText(meal.getName());
+        holder.recipesCount.setText(meal.getCategory() + " | " + meal.getCountry());
         Glide.with(context)
-                .load(category.getImageUrl())
+                .load(meal.getImageUrl())
+                .placeholder(R.drawable.logo)
+                .error(R.drawable.logo)
                 .into(holder.categoryImage);
     }
 
     @Override
     public int getItemCount() {
-        return categories.size();
+        return meals.size();
     }
 
     public static class CategoryViewHolder extends RecyclerView.ViewHolder {

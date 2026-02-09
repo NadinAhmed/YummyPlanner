@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nadin.yummy_planner.R;
-import com.nadin.yummy_planner.data.explore.Category;
 
 import java.util.ArrayList;
 import java.util.List;
