@@ -40,6 +40,7 @@
     <string name="add_to_fav_success_msg">Meal saved successfully</string>
     <string name="add_to_plan_success_msg">Meal added successfully</string>
     <string name="remove_from_fav_msg">This meal will be removed.\nDo you want to continue?</string>
+    <string name="remove_from_plan_msg">This meal will be removed.\nDo you want to continue?</string>
     <string name="current_week">Current Week</string>
     <string name="no_meals_for_this_day">No meals for this day</string>
 </resources>

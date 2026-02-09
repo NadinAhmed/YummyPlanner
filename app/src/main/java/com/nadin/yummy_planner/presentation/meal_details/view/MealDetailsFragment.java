@@ -138,11 +138,14 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
             addToPlanButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //show date picker dialog and get selected date
                     Calendar calendar = Calendar.getInstance();
                     DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), (view, year, month, dayOfMonth) -> {
                         Calendar selectedDate = Calendar.getInstance();
                         selectedDate.set(year, month, dayOfMonth);
+                        selectedDate.set(Calendar.HOUR_OF_DAY, 0);
+                        selectedDate.set(Calendar.MINUTE, 0);
+                        selectedDate.set(Calendar.SECOND, 0);
+                        selectedDate.set(Calendar.MILLISECOND, 0);
                         long date = selectedDate.getTimeInMillis();
                         presenter.addMealToPlan(meal, date);
                     }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));

@@ -1,5 +1,6 @@
 package com.nadin.yummy_planner.presentation.planner.view.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.nadin.yummy_planner.R;
 import com.nadin.yummy_planner.data.meal.model.Meal;
 import com.nadin.yummy_planner.data.meal.model.PlannerMeal;
 import com.nadin.yummy_planner.presentation.planner.view.OnClickListener;
+import com.nadin.yummy_planner.utils.RemoveDialog;
 
 import java.util.List;
 
@@ -21,10 +23,12 @@ public class MealPlannerAdapter extends RecyclerView.Adapter<MealPlannerAdapter.
 
     private List<PlannerMeal> meals;
     private OnClickListener onClickListener;
+    private Context context;
 
-    public MealPlannerAdapter(List<PlannerMeal> meals, OnClickListener onClickListener) {
+    public MealPlannerAdapter(List<PlannerMeal> meals, OnClickListener onClickListener, Context context) {
         this.meals = meals;
         this.onClickListener = onClickListener;
+        this.context = context;
     }
 
     @NonNull
@@ -53,7 +57,12 @@ public class MealPlannerAdapter extends RecyclerView.Adapter<MealPlannerAdapter.
                 .error(R.drawable.logo)
                 .into(holder.image);
 
-        holder.deleteIcon.setOnClickListener(v -> onClickListener.onRemoveMealClick(plannerMeal));
+
+        holder.deleteIcon.setOnClickListener(v -> {
+            RemoveDialog removeDialog = new RemoveDialog();
+            removeDialog.show(context, context.getString(R.string.remove_from_plan_msg), () -> onClickListener.onRemoveMealClick(plannerMeal));
+
+        });
     }
 
     @Override

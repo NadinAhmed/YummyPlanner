@@ -25,14 +25,18 @@
 
         <TextView
             android:id="@+id/meal_tittle_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:fontFamily="@font/plus_jakarta_sans_bold"
             android:text="Avocado Toast, Egg"
             android:textColor="@color/primaryTextColor"
             android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/delete_icon"
             app:layout_constraintStart_toEndOf="@id/meal_planner_image"
             app:layout_constraintTop_toTopOf="@+id/meal_planner_image" />
 

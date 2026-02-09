@@ -28,7 +28,7 @@ import java.util.Locale;
 
 public class PlannerFragment extends Fragment implements PlannerView, OnClickListener {
 
-    FragmentPlannerBinding binding;
+    private FragmentPlannerBinding binding;
     private PlannerPresenter plannerPresenter;
 
 
@@ -62,6 +62,10 @@ public class PlannerFragment extends Fragment implements PlannerView, OnClickLis
     private List<Day> getNext14Days() {
         List<Day> days = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
         SimpleDateFormat dayOfWeekFormat = new SimpleDateFormat("EEE", Locale.getDefault());
         SimpleDateFormat dayOfMonthFormat = new SimpleDateFormat("d", Locale.getDefault());
 
@@ -80,7 +84,7 @@ public class PlannerFragment extends Fragment implements PlannerView, OnClickLis
         mealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         List<PlannerMeal> meals = new ArrayList<>();
-        MealPlannerAdapter mealPlannerAdapter = new MealPlannerAdapter(meals, this);
+        MealPlannerAdapter mealPlannerAdapter = new MealPlannerAdapter(meals, this, requireContext());
         mealsRecyclerView.setAdapter(mealPlannerAdapter);
     }
 
@@ -108,7 +112,7 @@ public class PlannerFragment extends Fragment implements PlannerView, OnClickLis
             } else {
                 binding.mealsRecyclerView.setVisibility(View.VISIBLE);
                 binding.emptyView.setVisibility(View.GONE);
-                MealPlannerAdapter mealPlannerAdapter = new MealPlannerAdapter(meals, this);
+                MealPlannerAdapter mealPlannerAdapter = new MealPlannerAdapter(meals, this, requireContext());
                 binding.mealsRecyclerView.setAdapter(mealPlannerAdapter);
             }
         });

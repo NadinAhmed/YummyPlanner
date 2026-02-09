@@ -23,6 +23,7 @@ public class MealLocalDatasource {
     }
 
     public void addToFavourite(Meal meal) {
+        meal.setIngredients(meal.getIngredients());
         new Thread(() -> favDao.insertMeal(meal)).start();
     }
 
@@ -35,6 +36,7 @@ public class MealLocalDatasource {
     }
 
     public void addMealToPlanner(Meal meal, long date) {
+        meal.setIngredients(meal.getIngredients());
         PlannerMeal plannerMeal = new PlannerMeal();
         plannerMeal.setMeal(meal);
         plannerMeal.setDate(date);

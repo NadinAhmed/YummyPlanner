@@ -10,7 +10,7 @@ import com.nadin.yummy_planner.data.meal.model.PlannerMeal;
 
 import java.util.List;
 
-public class PlannerPresenterImpl implements PlannerPresenter{
+public class PlannerPresenterImpl implements PlannerPresenter {
     MealRepo repo;
 
     public PlannerPresenterImpl(Context context){
