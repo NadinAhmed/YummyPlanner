@@ -3,6 +3,7 @@ package com.nadin.yummy_planner.data.network;
 import com.nadin.yummy_planner.data.meal.datasource.remote.MealService;
 
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Network {
@@ -18,6 +19,7 @@ public class Network {
             retrofit = new Retrofit.Builder()
                     .baseUrl("https://www.themealdb.com/api/json/v1/1/")
                     .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                     .build();
         }
         return instance;

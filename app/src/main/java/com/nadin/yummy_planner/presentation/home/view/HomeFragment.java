@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment implements HomeView {
         viewRecipe = binding.buttonViewRecipe;
         popularMealsRecyclerView = binding.recyclerPopularMeals;
         popularMealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        favButton = binding.favoriteCardView;
+        favButton = view.findViewById(R.id.favorite_card_view);
 
         viewRecipe.setOnClickListener(v -> {
             Bundle bundle =  new Bundle();

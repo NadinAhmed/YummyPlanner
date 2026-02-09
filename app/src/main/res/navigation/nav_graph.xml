@@ -63,7 +63,7 @@
         tools:layout="@layout/fragment_planner" />
     <fragment
         android:id="@+id/exploreFragment"
-        android:name="com.nadin.yummy_planner.presentation.explore.ExploreFragment"
+        android:name="com.nadin.yummy_planner.presentation.explore.view.ExploreFragment"
         android:label="fragment_explore"
         tools:layout="@layout/fragment_explore" />
 </navigation>

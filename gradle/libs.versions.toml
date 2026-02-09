@@ -20,6 +20,8 @@ retrofit = "3.0.0"
 roomCompiler = "2.8.4"
 roomRuntime = "2.8.4"
 segmentedbutton = "3.1.9"
+rxandroid = "3.0.2"
+rxjava = "3.1.12"
 
 [libraries]
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
@@ -44,6 +46,10 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 segmentedbutton = { module = "com.github.addisonelliott:SegmentedButton", version.ref = "segmentedbutton" }
+room-rxjava3 = { module = "androidx.room:room-rxjava3", version.ref = "roomCompiler" }
+rxandroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroid" }
+rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
+adapter-rxjava3 = { module = "com.squareup.retrofit2:adapter-rxjava3", version.ref = "retrofit" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

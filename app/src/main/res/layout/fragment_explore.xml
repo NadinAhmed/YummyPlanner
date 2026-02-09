@@ -39,11 +39,13 @@
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
             app:hintEnabled="false"
+            app:hintMaxLines="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/search_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/search_icon"
@@ -52,12 +54,14 @@
                 android:hint="@string/search_hint"
                 android:paddingVertical="16dp"
                 android:textColorHint="@color/secondaryTextColor"
+                android:imeOptions="actionSearch"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/toggle_group"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,6 +75,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/categories"
+                android:textSize="14sp"
+                android:paddingVertical="12dp"
+                android:paddingHorizontal="16dp"
                 android:textColor="@color/secondaryTextColor" />
 
             <com.google.android.material.button.MaterialButton
@@ -78,14 +85,20 @@
                 style="@style/OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/countries" />
+                android:text="@string/countries"
+                android:textSize="14sp"
+                android:paddingVertical="12dp"
+                android:paddingHorizontal="16dp"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/ingredients_button"
                 style="@style/OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ingredients" />
+                android:text="@string/ingredients"
+                android:textSize="14sp"
+                android:paddingVertical="12dp"
+                android:paddingHorizontal="16dp"/>
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <TextView
@@ -115,5 +128,33 @@
             app:spanCount="2"
             tools:itemCount="6"
             tools:listitem="@layout/item_search" />
+
+        <TextView
+            android:id="@+id/message_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:fontFamily="@font/plus_jakarta_sans_medium"
+            android:textColor="@color/primaryColor"
+            android:textSize="18sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searching_type_tv"
+            tools:text="No meals found"
+            tools:visibility="visible" />
+
+        <ProgressBar
+            android:id="@+id/loading_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:indeterminateTint="@color/primaryColor"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searching_type_tv"
+            tools:visibility="visible" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

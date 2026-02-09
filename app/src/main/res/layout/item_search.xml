@@ -26,28 +26,18 @@
 
         <TextView
             android:id="@+id/meal_name_search"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginHorizontal="16dp"
             android:fontFamily="@font/plus_jakarta_sans_bold"
             android:textColor="@color/primaryTextColor"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@id/description_meal_search"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="Italian" />
-
-        <TextView
-            android:id="@+id/description_meal_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/plus_jakarta_sans_medium"
-            android:textColor="@color/primaryTextColor"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Dessert|Chains" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

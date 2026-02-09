@@ -1,4 +1,4 @@
-package com.nadin.yummy_planner.presentation.explore;
+package com.nadin.yummy_planner.presentation.explore.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -17,19 +17,19 @@ import com.nadin.yummy_planner.data.meal.model.Meal;
 import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CategoryViewHolder> {
-
-    private Context context;
     private List<Meal> meals;
 
-    public SearchAdapter(Context context, List<Meal> meals) {
-        this.context = context;
+    public SearchAdapter() {}
+
+    public void setMeals(List<Meal> meals) {
         this.meals = meals;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_search, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search, parent, false);
         return new CategoryViewHolder(view);
     }
 
@@ -37,8 +37,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CategoryVi
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         Meal meal = meals.get(position);
         holder.categoryName.setText(meal.getName());
-        holder.recipesCount.setText(meal.getCategory() + " | " + meal.getCountry());
-        Glide.with(context)
+        Glide.with(holder.itemView)
                 .load(meal.getImageUrl())
                 .placeholder(R.drawable.logo)
                 .error(R.drawable.logo)
@@ -47,19 +46,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CategoryVi
 
     @Override
     public int getItemCount() {
-        return meals.size();
+        return meals == null ? 0 : meals.size();
     }
 
     public static class CategoryViewHolder extends RecyclerView.ViewHolder {
         ImageView categoryImage;
         TextView categoryName;
-        TextView recipesCount;
-
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             categoryImage = itemView.findViewById(R.id.category_image);
             categoryName = itemView.findViewById(R.id.meal_name_search);
-            recipesCount = itemView.findViewById(R.id.description_meal_search);
         }
     }
 }
