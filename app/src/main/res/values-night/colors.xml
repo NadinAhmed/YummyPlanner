@@ -13,4 +13,5 @@
     <color name="gradientStartColor">#23140F</color>
     <color name="cardBackgroundColor">#36201A</color>
     <color name="itemRippleEffect">#36201A</color>
+    <color name="calenderColor">#FCF9F8</color>
 </resources>
