@@ -19,4 +19,10 @@ public class MealDetailsPresenterImpl implements MealDetailsPresenter{
         repo.addToFavourite(meal);
         mealDetailsView.onMealAddToFavSuccess();
     }
+
+    @Override
+    public void addMealToPlan(Meal meal, long date) {
+        repo.addMealToPlanner(meal, date);
+        mealDetailsView.onMealAddToPlanSuccess();
+    }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,9 +29,11 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
+import android.app.DatePickerDialog;
 
-public class MealDetailsFragment extends Fragment implements MealDetailsView{
+public class MealDetailsFragment extends Fragment implements MealDetailsView {
 
     private FragmentMealDetailsBinding binding;
     private RecyclerView ingredientsRecyclerView;
@@ -44,13 +47,14 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
     private MaterialCardView favCard;
     private SuccessDialog successDialog;
     private MealDetailsPresenter presenter;
+    private Button addToPlanButton;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(getArguments() != null){
+        if (getArguments() != null) {
             meal = (Meal) getArguments().getSerializable("meal");
         }
     }
@@ -78,10 +82,11 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
         mealCategoryChip = binding.chipCategory;
         mealYoutubePlayerView = binding.youtubeVideo;
         favCard = binding.favoriteButtonContainer;
+        addToPlanButton = binding.addToPlanButton;
         successDialog = new SuccessDialog();
         presenter = new MealDetailsPresenterImpl(requireContext(), this);
 
-        if(meal != null){
+        if (meal != null) {
             Glide.with(this)
                     .load(meal.getImageUrl())
                     .placeholder(R.drawable.logo)
@@ -129,7 +134,23 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
                     presenter.addMealToFav(meal);
                 }
             });
-             IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(meal.getIngredients());
+
+            addToPlanButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //show date picker dialog and get selected date
+                    Calendar calendar = Calendar.getInstance();
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), (view, year, month, dayOfMonth) -> {
+                        Calendar selectedDate = Calendar.getInstance();
+                        selectedDate.set(year, month, dayOfMonth);
+                        long date = selectedDate.getTimeInMillis();
+                        presenter.addMealToPlan(meal, date);
+                    }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                    datePickerDialog.show();
+                }
+            });
+
+            IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(meal.getIngredients());
             ingredientsRecyclerView.setAdapter(ingredientsAdapter);
         }
     }
@@ -137,5 +158,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView{
     @Override
     public void onMealAddToFavSuccess() {
         successDialog.show(requireContext(), getString(R.string.add_to_fav_success_msg));
+    }
+
+    @Override
+    public void onMealAddToPlanSuccess() {
+        successDialog.show(requireContext(), getString(R.string.add_to_plan_success_msg));
     }
 }

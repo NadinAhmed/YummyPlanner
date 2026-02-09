@@ -28,7 +28,7 @@ public class SuccessDialog {
             if(dialog != null && dialog.isShowing()){
                 dialog.dismiss();
             };
-        }, 3000);
+        }, 1500);
     }
 
 }
