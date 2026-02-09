@@ -100,7 +100,7 @@ public class AuthScreen extends Fragment implements AuthContract.View {
             binding.nameTextLayout.setVisibility(View.GONE);
             binding.btnFinishRegister.setText(R.string.log_in);
         } else {
-            binding.authImageView.setImageResource(R.drawable.signin_image);
+            binding.authImageView.setImageResource(R.drawable.login);
             binding.authLabelTv.setText(R.string.join_our_family);
             binding.nameTextInput.setVisibility(View.VISIBLE);
             binding.nameTv.setVisibility(View.VISIBLE);
