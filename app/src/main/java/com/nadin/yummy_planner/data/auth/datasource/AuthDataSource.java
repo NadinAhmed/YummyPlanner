@@ -18,6 +18,8 @@ import com.google.firebase.firestore.SetOptions;
 import com.nadin.yummy_planner.R;
 import com.nadin.yummy_planner.data.auth.model.User;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -77,7 +79,8 @@ public class AuthDataSource {
                                     })
                                     .addOnFailureListener(error -> emitter.onError(new Throwable(error.getMessage())));
                         }))
-                .subscribeOn(Schedulers.io());
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<User> register(String name, String email, String password) {
@@ -177,6 +180,46 @@ public class AuthDataSource {
 
     public FirebaseUser getCurrentUser() {
         return firebaseAuth.getCurrentUser();
+    }
+
+    public Single<String> getSignedInUserName() {
+        return Single.<String>create(emitter -> {
+                    FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                    if (currentUser == null) {
+                        emitter.onError(new Throwable("No signed-in user"));
+                        return;
+                    }
+
+                    String displayName = currentUser.getDisplayName();
+                    if (displayName != null && !displayName.trim().isEmpty()) {
+                        emitter.onSuccess(displayName);
+                        return;
+                    }
+
+                    firestore.collection("users")
+                            .document(currentUser.getUid())
+                            .get()
+                            .addOnSuccessListener(documentSnapshot -> {
+                                String name = documentSnapshot.getString("name");
+                                if (name != null && !name.trim().isEmpty()) {
+                                    emitter.onSuccess(name);
+                                    return;
+                                }
+
+                                String email = currentUser.getEmail();
+                                if (email != null && !email.trim().isEmpty()) {
+                                    emitter.onSuccess(email);
+                                } else {
+                                    emitter.onSuccess("User");
+                                }
+                            })
+                            .addOnFailureListener(error -> emitter.onError(new Throwable(error.getMessage())));
+                })
+                .subscribeOn(Schedulers.io());
+    }
+
+    public Completable logoutCompletable() {
+        return Completable.fromAction(this::logout).subscribeOn(Schedulers.io());
     }
 
     public boolean isUserLoggedIn() {

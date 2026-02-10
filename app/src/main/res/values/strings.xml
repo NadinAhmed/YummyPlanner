@@ -2,11 +2,12 @@
     <string name="app_name">Yummy Planner</string>
     <string name="yummy_planner">YummyPlanner</string>
     <string name="slogen">Plan it. Love it. Eat it.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lets_get_cooking">Let\'s get cooking!</string>
     <string name="meal_planning_made_happy">Meal planning made happy</string>
     <string name="log_in">Log In</string>
+    <string name="sign_in">Sign In</string>
+    <string name="logout">Logout</string>
+    <string name="logout_confirmation_message">You will be signed out.\nDo you want to continue?</string>
     <string name="sign_up">Sign Up</string>
     <string name="email">Email</string>
     <string name="email_hint">example@exmple.com</string>
@@ -33,6 +34,13 @@
     <string name="planner">Planner</string>
     <string name="favorites">Favorites</string>
     <string name="profile">Profile</string>
+    <string name="signed_in_as">Signed in as</string>
+    <string name="guest_mode">You are using guest mode</string>
+    <string name="settings">Settings</string>
+    <string name="dark_theme">Dark Theme</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="arabic">Arabic</string>
     <string name="hi_there">Hi there!</string>
     <string name="ready_to_cook">Ready to cook?</string>
     <string name="meal_of_the_day">Meal of the Day</string>
