@@ -71,4 +71,9 @@ public class MealLocalDatasource {
             plannerMealDao.insertMeals(plannerMeals);
         }
     }
+
+    public void clearAllLocalData() {
+        favDao.clearAll();
+        plannerMealDao.clearAll();
+    }
 }

@@ -38,6 +38,24 @@ public class BackupRestoreRepository {
                 ));
     }
 
+    public Completable backupThenClearCurrentUserData() {
+        return Single.fromCallable(() -> {
+                    FirebaseUser currentUser = authDataSource.getCurrentUser();
+                    if (currentUser == null) {
+                        throw new IllegalStateException("No signed-in user");
+                    }
+                    return currentUser.getUid();
+                })
+                .subscribeOn(Schedulers.io())
+                .flatMapCompletable(userId -> cloudBackupDataSource.uploadBackup(
+                                userId,
+                                mealRepo.getAllFavMealsSync(),
+                                mealRepo.getAllPlannerMealsSync()
+                        )
+                        .andThen(Completable.fromAction(mealRepo::clearAllLocalData)
+                                .subscribeOn(Schedulers.io())));
+    }
+
     public Single<Boolean> restoreCurrentUserData() {
         return Single.fromCallable(() -> {
                     FirebaseUser currentUser = authDataSource.getCurrentUser();

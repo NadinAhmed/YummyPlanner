@@ -69,6 +69,10 @@ public class MealRepo {
         mealLocalDatasource.replaceAllLocalData(favourites, plannerMeals);
     }
 
+    public void clearAllLocalData() {
+        mealLocalDatasource.clearAllLocalData();
+    }
+
     public Single<Meal> getMealById(String id) {
         return mealRemoteDatasource.getMealById(id)
                 .subscribeOn(Schedulers.io())

@@ -41,18 +41,10 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
     @Override
     public void onLogoutClicked() {
-        compositeDisposable.add(backupRestoreRepository.backupCurrentUserData()
-                .toSingleDefault(false)
-                .onErrorReturnItem(true)
+        compositeDisposable.add(backupRestoreRepository.backupThenClearCurrentUserData()
+                .andThen(authDataSource.logoutCompletable())
                 .observeOn(AndroidSchedulers.mainThread())
-                .flatMapCompletable(backupFailed -> authDataSource.logoutCompletable()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnComplete(() -> {
-                            if (backupFailed) {
-                                view.showError("Backup failed before logout");
-                            }
-                            view.showGuestState();
-                        }))
+                .doOnComplete(view::showGuestState)
                 .subscribe(() -> {
                 }, throwable -> view.showError(safeMessage(throwable))));
     }
