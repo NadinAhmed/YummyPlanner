@@ -37,7 +37,7 @@ public class AuthScreen extends Fragment implements AuthContract.View {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        presenter = new AuthPresenter(this);
+        presenter = new AuthPresenter(this, requireContext());
     }
 
     @Override

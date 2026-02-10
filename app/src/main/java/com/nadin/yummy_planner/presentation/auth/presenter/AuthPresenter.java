@@ -1,5 +1,7 @@
 package com.nadin.yummy_planner.presentation.auth.presenter;
 
+import android.content.Context;
+
 import com.nadin.yummy_planner.data.auth.datasource.AuthDataSource;
 import com.nadin.yummy_planner.data.auth.model.User;
 import com.nadin.yummy_planner.utils.AuthCallback;
@@ -21,9 +23,9 @@ public class AuthPresenter implements AuthContract.Presenter{
         }
     };
 
-    public AuthPresenter(AuthContract.View view){
+    public AuthPresenter(AuthContract.View view, Context context){
         this.view = view;
-        authDataSource = new AuthDataSource();
+        authDataSource = new AuthDataSource(context);
     }
     @Override
     public void login(String email, String password) {

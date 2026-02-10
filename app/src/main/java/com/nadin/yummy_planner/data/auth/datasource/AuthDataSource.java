@@ -1,5 +1,8 @@
 package com.nadin.yummy_planner.data.auth.datasource;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -7,12 +10,18 @@ import com.nadin.yummy_planner.data.auth.model.User;
 import com.nadin.yummy_planner.utils.AuthCallback;
 
 public class AuthDataSource {
-    private FirebaseAuth firebaseAuth;
-    private FirebaseFirestore firestore;
+    private static final String PREFS_AUTH_SESSION = "auth_session";
+    private static final String KEY_IS_LOGGED_IN = "is_logged_in";
 
-    public AuthDataSource() {
+    private final FirebaseAuth firebaseAuth;
+    private final FirebaseFirestore firestore;
+    private final SharedPreferences sharedPreferences;
+
+    public AuthDataSource(Context context) {
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+        sharedPreferences = context.getApplicationContext()
+                .getSharedPreferences(PREFS_AUTH_SESSION, Context.MODE_PRIVATE);
     }
 
     public void login(
@@ -34,6 +43,7 @@ public class AuthDataSource {
                                             name != null ? name : "",
                                             userEmail != null ? userEmail : ""
                                     );
+                                    persistLoginState(true);
                                     authCallback.onSuccess(user);
                                 })
                                 .addOnFailureListener(e -> authCallback.onError(e.getMessage()));
@@ -64,7 +74,10 @@ public class AuthDataSource {
                         firestore.collection("users")
                                 .document(user.getId())
                                 .set(user)
-                                .addOnSuccessListener(aVoid -> authCallback.onSuccess(user))
+                                .addOnSuccessListener(aVoid -> {
+                                    persistLoginState(true);
+                                    authCallback.onSuccess(user);
+                                })
                                 .addOnFailureListener(e -> authCallback.onError(e.getMessage()));
                     } else {
                         authCallback.onError(
@@ -78,9 +91,19 @@ public class AuthDataSource {
 
     public void logout() {
         firebaseAuth.signOut();
+        persistLoginState(false);
     }
 
     public FirebaseUser getCurrentUser() {
         return firebaseAuth.getCurrentUser();
+    }
+
+    public boolean isUserLoggedIn() {
+        boolean isPersistedLoggedIn = sharedPreferences.getBoolean(KEY_IS_LOGGED_IN, false);
+        return isPersistedLoggedIn && firebaseAuth.getCurrentUser() != null;
+    }
+
+    private void persistLoginState(boolean isLoggedIn) {
+        sharedPreferences.edit().putBoolean(KEY_IS_LOGGED_IN, isLoggedIn).apply();
     }
 }
