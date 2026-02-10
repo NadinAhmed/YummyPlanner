@@ -6,6 +6,8 @@ import android.content.Context;
 import com.nadin.yummy_planner.data.meal.MealRepo;
 import com.nadin.yummy_planner.presentation.explore.view.SearchView;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+
 
 public class SearchPresenterImpl implements SearchPresenter {
     SearchView searchView;
@@ -19,7 +21,9 @@ public class SearchPresenterImpl implements SearchPresenter {
     @SuppressLint("CheckResult")
     @Override
     public void searchMealsByName(String name) {
-        mealRepo.searchMealsByName(name).subscribe(
+        mealRepo.searchMealsByName(name)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
                 meals -> {
                      searchView.displayMeals(meals);
                 }, error -> {
@@ -30,7 +34,9 @@ public class SearchPresenterImpl implements SearchPresenter {
     @SuppressLint("CheckResult")
     @Override
     public void searchMealsByIngredient(String ingredient) {
-        mealRepo.searchMealsByIngredient(ingredient).subscribe(
+        mealRepo.searchMealsByIngredient(ingredient)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
                 meals -> {
                     searchView.displayMeals(meals);
                 }, error -> {
@@ -41,7 +47,9 @@ public class SearchPresenterImpl implements SearchPresenter {
     @SuppressLint("CheckResult")
     @Override
     public void searchMealsByCategory(String category) {
-        mealRepo.searchMealsByCategory(category).subscribe(
+        mealRepo.searchMealsByCategory(category)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
                 meals -> {
                     searchView.displayMeals(meals);
                 }, error -> {
@@ -53,7 +61,9 @@ public class SearchPresenterImpl implements SearchPresenter {
     @SuppressLint("CheckResult")
     @Override
     public void searchMealsByCountry(String area) {
-        mealRepo.searchMealsByCountry(area).subscribe(
+        mealRepo.searchMealsByCountry(area)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
                 meals -> {
                     searchView.displayMeals(meals);
                 }, error -> {

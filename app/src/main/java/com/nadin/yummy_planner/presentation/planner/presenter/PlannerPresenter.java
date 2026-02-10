@@ -1,15 +1,16 @@
 package com.nadin.yummy_planner.presentation.planner.presenter;
 
-import androidx.lifecycle.LiveData;
-
 import com.nadin.yummy_planner.data.meal.model.Meal;
 import com.nadin.yummy_planner.data.meal.model.PlannerMeal;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+
 public interface PlannerPresenter {
-     void insertMealToPlanner(Meal meal, long date);
-     void deleteMealFromPlanner(PlannerMeal meal);
-     LiveData<List<PlannerMeal>> getMealsByDate(long date);
+     Completable insertMealToPlanner(Meal meal, long date);
+     Completable deleteMealFromPlanner(PlannerMeal meal);
+     Flowable<List<PlannerMeal>> getMealsByDate(long date);
 
 }

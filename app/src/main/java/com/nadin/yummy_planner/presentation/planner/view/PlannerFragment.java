@@ -29,11 +29,15 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+
 public class PlannerFragment extends Fragment implements PlannerView, OnClickListener {
 
     private FragmentPlannerBinding binding;
     private PlannerPresenter plannerPresenter;
     private AuthDataSource authDataSource;
+    private final CompositeDisposable disposables = new CompositeDisposable();
 
 
     public PlannerFragment() {}
@@ -118,21 +122,35 @@ public class PlannerFragment extends Fragment implements PlannerView, OnClickLis
 
     @Override
     public void onDayClick(long date) {
-        plannerPresenter.getMealsByDate(date).observe(getViewLifecycleOwner(), meals -> {
-            if (meals.isEmpty()) {
-                binding.mealsRecyclerView.setVisibility(View.GONE);
-                binding.emptyView.setVisibility(View.VISIBLE);
-            } else {
-                binding.mealsRecyclerView.setVisibility(View.VISIBLE);
-                binding.emptyView.setVisibility(View.GONE);
-                MealPlannerAdapter mealPlannerAdapter = new MealPlannerAdapter(meals, this, requireContext());
-                binding.mealsRecyclerView.setAdapter(mealPlannerAdapter);
-            }
-        });
+        disposables.clear();
+        disposables.add(plannerPresenter.getMealsByDate(date)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(meals -> {
+                    if (meals.isEmpty()) {
+                        binding.mealsRecyclerView.setVisibility(View.GONE);
+                        binding.emptyView.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.mealsRecyclerView.setVisibility(View.VISIBLE);
+                        binding.emptyView.setVisibility(View.GONE);
+                        MealPlannerAdapter mealPlannerAdapter = new MealPlannerAdapter(meals, this, requireContext());
+                        binding.mealsRecyclerView.setAdapter(mealPlannerAdapter);
+                    }
+                }, throwable -> {
+                }));
     }
 
     @Override
     public void onRemoveMealClick(PlannerMeal plannerMeal) {
-        plannerPresenter.deleteMealFromPlanner(plannerMeal);
+        disposables.add(plannerPresenter.deleteMealFromPlanner(plannerMeal)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                }, throwable -> {
+                }));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        disposables.clear();
     }
 }

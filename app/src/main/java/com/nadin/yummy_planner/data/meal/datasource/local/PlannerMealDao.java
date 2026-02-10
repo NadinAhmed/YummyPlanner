@@ -1,6 +1,5 @@
 package com.nadin.yummy_planner.data.meal.datasource.local;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -12,23 +11,27 @@ import com.nadin.yummy_planner.data.meal.model.PlannerMeal;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
+
 @Dao
 public interface PlannerMealDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertMeal(PlannerMeal meal);
+    Completable insertMeal(PlannerMeal meal);
 
     @Delete
-    public void deleteMeal(PlannerMeal meal);
+    Completable deleteMeal(PlannerMeal meal);
 
     @Query("SELECT * FROM PlannerMeals WHERE date = :date")
-    public LiveData<List<PlannerMeal>> getMealByDate(long date);
+    Flowable<List<PlannerMeal>> getMealByDate(long date);
 
     @Query("SELECT * FROM PlannerMeals")
-    List<PlannerMeal> getAllPlannerMealsSync();
+    Single<List<PlannerMeal>> getAllPlannerMealsOnce();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertMeals(List<PlannerMeal> meals);
+    Completable insertMeals(List<PlannerMeal> meals);
 
     @Query("DELETE FROM PlannerMeals")
-    void clearAll();
+    Completable clearAll();
 }

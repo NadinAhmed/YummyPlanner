@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,12 +21,16 @@ import com.nadin.yummy_planner.presentation.favourite.presenter.FavouritePresent
 
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+
 public class FavouriteFragment extends Fragment{
     private FragmentFavouriteBinding binding;
     private RecyclerView favouriteRecyclerView;
     private FavouriteAdapter adapter;
     private FavouritePresenter presenter;
     private AuthDataSource authDataSource;
+    private final CompositeDisposable disposables = new CompositeDisposable();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,19 +60,29 @@ public class FavouriteFragment extends Fragment{
         favouriteRecyclerView.setLayoutManager(layoutManager);
 
         presenter = new FavouritePresenterImpl(getContext());
-        presenter.getAllFavMeals().observe(getViewLifecycleOwner(), new Observer<List<Meal>>() {
-            @Override
-            public void onChanged(List<Meal> meals) {
-                adapter.setMeals(meals);
-            }
-        });
 
         adapter = new FavouriteAdapter(requireContext(),new OnDeleteClickListener() {
             @Override
             public void onDeleteClicked(Meal meal) {
-                presenter.deleteFromFav(meal);
+                disposables.add(presenter.deleteFromFav(meal)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(() -> {
+                        }, throwable -> {
+                        }));
             }
         });
         favouriteRecyclerView.setAdapter(adapter);
+
+        disposables.add(presenter.getAllFavMeals()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(meals -> adapter.setMeals(meals),
+                        throwable -> {
+                        }));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        disposables.clear();
     }
 }

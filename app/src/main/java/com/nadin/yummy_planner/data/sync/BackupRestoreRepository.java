@@ -31,11 +31,13 @@ public class BackupRestoreRepository {
                     return currentUser.getUid();
                 })
                 .subscribeOn(Schedulers.io())
-                .flatMapCompletable(userId -> cloudBackupDataSource.uploadBackup(
-                        userId,
-                        mealRepo.getAllFavMealsSync(),
-                        mealRepo.getAllPlannerMealsSync()
-                ));
+                .flatMapCompletable(userId -> mealRepo.getAllFavMealsOnce()
+                        .flatMapCompletable(favourites -> mealRepo.getAllPlannerMealsOnce()
+                                .flatMapCompletable(plannerMeals -> cloudBackupDataSource.uploadBackup(
+                                        userId,
+                                        favourites,
+                                        plannerMeals
+                                ))));
     }
 
     public Completable backupThenClearCurrentUserData() {
@@ -47,13 +49,14 @@ public class BackupRestoreRepository {
                     return currentUser.getUid();
                 })
                 .subscribeOn(Schedulers.io())
-                .flatMapCompletable(userId -> cloudBackupDataSource.uploadBackup(
-                                userId,
-                                mealRepo.getAllFavMealsSync(),
-                                mealRepo.getAllPlannerMealsSync()
-                        )
-                        .andThen(Completable.fromAction(mealRepo::clearAllLocalData)
-                                .subscribeOn(Schedulers.io())));
+                .flatMapCompletable(userId -> mealRepo.getAllFavMealsOnce()
+                        .flatMapCompletable(favourites -> mealRepo.getAllPlannerMealsOnce()
+                                .flatMapCompletable(plannerMeals -> cloudBackupDataSource.uploadBackup(
+                                                userId,
+                                                favourites,
+                                                plannerMeals
+                                        )
+                                        .andThen(mealRepo.clearAllLocalData()))));
     }
 
     public Single<Boolean> restoreCurrentUserData() {
@@ -71,11 +74,10 @@ public class BackupRestoreRepository {
                                 return Single.just(false);
                             }
 
-                            return Completable.fromAction(() -> mealRepo.replaceAllLocalData(
+                            return mealRepo.replaceAllLocalData(
                                             snapshot.getFavourites(),
                                             snapshot.getPlannerMeals()
-                                    ))
-                                    .subscribeOn(Schedulers.io())
+                                    )
                                     .andThen(Single.just(true));
                         }));
     }
