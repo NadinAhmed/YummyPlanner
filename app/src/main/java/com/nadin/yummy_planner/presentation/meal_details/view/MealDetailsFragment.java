@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -164,7 +165,16 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
                         long date = selectedDate.getTimeInMillis();
                         presenter.addMealToPlan(meal, date);
                     }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                    Calendar minDateCalendar = Calendar.getInstance();
+                    minDateCalendar.set(Calendar.HOUR_OF_DAY, 0);
+                    minDateCalendar.set(Calendar.MINUTE, 0);
+                    minDateCalendar.set(Calendar.SECOND, 0);
+                    minDateCalendar.set(Calendar.MILLISECOND, 0);
+                    datePickerDialog.getDatePicker().setMinDate(minDateCalendar.getTimeInMillis());
                     datePickerDialog.show();
+                    int buttonColor = ContextCompat.getColor(requireContext(), R.color.primaryTextColor);
+                    datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(buttonColor);
+                    datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(buttonColor);
                 }
             });
 
