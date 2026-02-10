@@ -16,7 +16,16 @@
     <string name="google">Google</string>
     <string name="facebook">Facebook</string>
     <string name="continue_as_guest">Continue as Guest</string>
+    <string name="google_sign_in_cancelled">Google sign-in was cancelled</string>
     <string name="join_our_family">Join our Family!</string>
+    <string name="login_required_title">Login required</string>
+    <string name="login_required_message">Please login to use this feature.</string>
+    <string name="login_required_dialog_message">Please login or signup to use this feature.</string>
+    <string name="login_or_signup">Login / Sign Up</string>
+    <string name="unlock_favorites_title">Unlock Favorites</string>
+    <string name="unlock_favorites_message">Login or signup to save and manage favorite meals.</string>
+    <string name="unlock_planner_title">Unlock Planner</string>
+    <string name="unlock_planner_message">Login or signup to add meals to your plan.</string>
     <string name="retry">Retry</string>
     <string name="name">Name</string>
     <string name="home">Home</string>

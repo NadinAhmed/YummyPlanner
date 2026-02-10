@@ -16,7 +16,7 @@ public class SplashPresenterImpl implements SplashPresenter {
 
     @Override
     public void decideStartDestination() {
-        if (authDataSource.isUserLoggedIn()) {
+        if (authDataSource.hasActiveSession()) {
             view.navigateToHome();
         } else {
             view.navigateToAuth();

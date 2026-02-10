@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nadin.yummy_planner.R;
+import com.nadin.yummy_planner.data.auth.datasource.AuthDataSource;
 import com.nadin.yummy_planner.data.meal.model.PlannerMeal;
 import com.nadin.yummy_planner.databinding.FragmentPlannerBinding;
 import com.nadin.yummy_planner.presentation.planner.model.Day;
@@ -30,6 +33,7 @@ public class PlannerFragment extends Fragment implements PlannerView, OnClickLis
 
     private FragmentPlannerBinding binding;
     private PlannerPresenter plannerPresenter;
+    private AuthDataSource authDataSource;
 
 
     public PlannerFragment() {}
@@ -44,6 +48,15 @@ public class PlannerFragment extends Fragment implements PlannerView, OnClickLis
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        authDataSource = new AuthDataSource(requireContext());
+
+        if (authDataSource.isGuestUser()) {
+            binding.plannerContentGroup.setVisibility(View.GONE);
+            binding.guestPromptLayout.setVisibility(View.VISIBLE);
+            binding.btnAuthFromPlanner.setOnClickListener(v -> NavHostFragment.findNavController(PlannerFragment.this).navigate(R.id.authScreen));
+            return;
+        }
+
         plannerPresenter = new PlannerPresenterImpl(getContext());
         setupCalendarRecyclerView();
         setupMealsRecyclerView();

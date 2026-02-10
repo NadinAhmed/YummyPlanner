@@ -19,10 +19,12 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
 import com.nadin.yummy_planner.R;
+import com.nadin.yummy_planner.data.auth.datasource.AuthDataSource;
 import com.nadin.yummy_planner.data.meal.model.Meal;
 import com.nadin.yummy_planner.databinding.FragmentMealDetailsBinding;
 import com.nadin.yummy_planner.presentation.meal_details.presenter.MealDetailsPresenter;
 import com.nadin.yummy_planner.presentation.meal_details.presenter.MealDetailsPresenterImpl;
+import com.nadin.yummy_planner.utils.AuthRequiredDialog;
 import com.nadin.yummy_planner.utils.SuccessDialog;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
@@ -49,6 +51,8 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     private SuccessDialog successDialog;
     private MealDetailsPresenter presenter;
     private Button addToPlanButton;
+    private AuthDataSource authDataSource;
+    private AuthRequiredDialog authRequiredDialog;
 
 
     @Override
@@ -85,6 +89,8 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         favCard = binding.favoriteButtonContainer;
         addToPlanButton = binding.addToPlanButton;
         successDialog = new SuccessDialog();
+        authDataSource = new AuthDataSource(requireContext());
+        authRequiredDialog = new AuthRequiredDialog();
         presenter = new MealDetailsPresenterImpl(requireContext(), this);
 
         if (meal != null) {
@@ -132,6 +138,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
             favCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (authDataSource.isGuestUser()) {
+                        authRequiredDialog.show(requireContext(), () -> androidx.navigation.fragment.NavHostFragment.findNavController(MealDetailsFragment.this).navigate(R.id.authScreen));
+                        return;
+                    }
                     presenter.addMealToFav(meal);
                 }
             });
@@ -139,6 +149,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
             addToPlanButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (authDataSource.isGuestUser()) {
+                        authRequiredDialog.show(requireContext(), () -> androidx.navigation.fragment.NavHostFragment.findNavController(MealDetailsFragment.this).navigate(R.id.authScreen));
+                        return;
+                    }
                     Calendar calendar = Calendar.getInstance();
                     DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), R.style.CustomDatePickerTheme, (view, year, month, dayOfMonth) -> {
                         Calendar selectedDate = Calendar.getInstance();
