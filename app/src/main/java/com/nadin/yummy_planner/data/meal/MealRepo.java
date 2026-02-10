@@ -57,6 +57,18 @@ public class MealRepo {
         return mealLocalDatasource.getMealByDate(date);
     }
 
+    public List<Meal> getAllFavMealsSync() {
+        return mealLocalDatasource.getAllFavMealsSync();
+    }
+
+    public List<PlannerMeal> getAllPlannerMealsSync() {
+        return mealLocalDatasource.getAllPlannerMealsSync();
+    }
+
+    public void replaceAllLocalData(List<Meal> favourites, List<PlannerMeal> plannerMeals) {
+        mealLocalDatasource.replaceAllLocalData(favourites, plannerMeals);
+    }
+
     public Single<Meal> getMealById(String id) {
         return mealRemoteDatasource.getMealById(id)
                 .subscribeOn(Schedulers.io())

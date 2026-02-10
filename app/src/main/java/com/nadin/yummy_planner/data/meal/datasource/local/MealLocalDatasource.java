@@ -50,4 +50,25 @@ public class MealLocalDatasource {
     public LiveData<List<PlannerMeal>> getMealByDate(long date) {
         return plannerMealDao.getMealByDate(date);
     }
+
+    public List<Meal> getAllFavMealsSync() {
+        return favDao.getAllFavMealsSync();
+    }
+
+    public List<PlannerMeal> getAllPlannerMealsSync() {
+        return plannerMealDao.getAllPlannerMealsSync();
+    }
+
+    public void replaceAllLocalData(List<Meal> favourites, List<PlannerMeal> plannerMeals) {
+        favDao.clearAll();
+        plannerMealDao.clearAll();
+
+        if (favourites != null && !favourites.isEmpty()) {
+            favDao.insertMeals(favourites);
+        }
+
+        if (plannerMeals != null && !plannerMeals.isEmpty()) {
+            plannerMealDao.insertMeals(plannerMeals);
+        }
+    }
 }

@@ -6,6 +6,8 @@
     <string name="meal_planning_made_happy">Meal planning made happy</string>
     <string name="log_in">Log In</string>
     <string name="sign_in">Sign In</string>
+    <string name="backup">Backup</string>
+    <string name="restore">Restore</string>
     <string name="logout">Logout</string>
     <string name="logout_confirmation_message">You will be signed out.\nDo you want to continue?</string>
     <string name="sign_up">Sign Up</string>

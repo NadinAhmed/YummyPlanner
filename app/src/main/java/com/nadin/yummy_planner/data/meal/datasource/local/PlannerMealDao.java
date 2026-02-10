@@ -22,4 +22,13 @@ public interface PlannerMealDao {
 
     @Query("SELECT * FROM PlannerMeals WHERE date = :date")
     public LiveData<List<PlannerMeal>> getMealByDate(long date);
+
+    @Query("SELECT * FROM PlannerMeals")
+    List<PlannerMeal> getAllPlannerMealsSync();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertMeals(List<PlannerMeal> meals);
+
+    @Query("DELETE FROM PlannerMeals")
+    void clearAll();
 }

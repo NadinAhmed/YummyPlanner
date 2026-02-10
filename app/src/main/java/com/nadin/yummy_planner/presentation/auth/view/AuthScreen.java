@@ -3,6 +3,7 @@ package com.nadin.yummy_planner.presentation.auth.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -149,6 +150,11 @@ public class AuthScreen extends Fragment implements AuthContract.View {
     public void onError(String message) {
         Log.d("AuthScreen", "onError: " + message);
         viewStateController.showError(message);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

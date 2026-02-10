@@ -22,4 +22,13 @@ public interface FavouriteDao {
 
     @Query("SELECT * FROM favmeals")
     LiveData<List<Meal>> getAllFavMeals();
+
+    @Query("SELECT * FROM FavMeals")
+    List<Meal> getAllFavMealsSync();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertMeals(List<Meal> meals);
+
+    @Query("DELETE FROM FavMeals")
+    void clearAll();
 }

@@ -8,6 +8,7 @@ public interface AuthContract {
         void launchGoogleSignIn(Intent signInIntent);
         void onSuccess();
         void onError(String message);
+        void showMessage(String message);
     }
 
     interface Presenter{

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.nadin.yummy_planner.data.auth.datasource.AuthDataSource;
 import com.nadin.yummy_planner.data.settings.datasource.AppSettingsDataSource;
+import com.nadin.yummy_planner.data.sync.BackupRestoreRepository;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -12,12 +13,14 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     private final ProfileContract.View view;
     private final AuthDataSource authDataSource;
     private final AppSettingsDataSource appSettingsDataSource;
+    private final BackupRestoreRepository backupRestoreRepository;
     private final CompositeDisposable compositeDisposable;
 
     public ProfilePresenter(ProfileContract.View view, Context context) {
         this.view = view;
         this.authDataSource = new AuthDataSource(context);
         this.appSettingsDataSource = new AppSettingsDataSource(context);
+        this.backupRestoreRepository = new BackupRestoreRepository(context);
         this.compositeDisposable = new CompositeDisposable();
     }
 
@@ -38,9 +41,42 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
     @Override
     public void onLogoutClicked() {
-        compositeDisposable.add(authDataSource.logoutCompletable()
+        compositeDisposable.add(backupRestoreRepository.backupCurrentUserData()
+                .toSingleDefault(false)
+                .onErrorReturnItem(true)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(view::showGuestState, throwable -> view.showError(throwable.getMessage())));
+                .flatMapCompletable(backupFailed -> authDataSource.logoutCompletable()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnComplete(() -> {
+                            if (backupFailed) {
+                                view.showError("Backup failed before logout");
+                            }
+                            view.showGuestState();
+                        }))
+                .subscribe(() -> {
+                }, throwable -> view.showError(safeMessage(throwable))));
+    }
+
+    @Override
+    public void onBackupClicked() {
+        compositeDisposable.add(backupRestoreRepository.backupCurrentUserData()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> view.showMessage("Backup completed successfully"),
+                        throwable -> view.showError(safeMessage(throwable))
+                ));
+    }
+
+    @Override
+    public void onRestoreClicked() {
+        compositeDisposable.add(backupRestoreRepository.restoreCurrentUserData()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        restored -> view.showMessage(restored
+                                ? "Data restored successfully"
+                                : "No backup found"),
+                        throwable -> view.showError(safeMessage(throwable))
+                ));
     }
 
     @Override
@@ -61,5 +97,12 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     @Override
     public void clear() {
         compositeDisposable.clear();
+    }
+
+    private String safeMessage(Throwable throwable) {
+        if (throwable == null || throwable.getMessage() == null || throwable.getMessage().trim().isEmpty()) {
+            return "Something went wrong";
+        }
+        return throwable.getMessage();
     }
 }

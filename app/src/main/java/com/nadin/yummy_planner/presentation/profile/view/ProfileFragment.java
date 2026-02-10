@@ -58,6 +58,8 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
                 () -> presenter.onLogoutClicked()
         ));
         binding.btnSignIn.setOnClickListener(v -> presenter.onSignInClicked());
+        binding.btnBackup.setOnClickListener(v -> presenter.onBackupClicked());
+        binding.btnRestore.setOnClickListener(v -> presenter.onRestoreClicked());
         binding.darkThemeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (ignoreDarkThemeCallback) {
                 return;
@@ -134,6 +136,11 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
 
     @Override
     public void showError(String message) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showMessage(String message) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 

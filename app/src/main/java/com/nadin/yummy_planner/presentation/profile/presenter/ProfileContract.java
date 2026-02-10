@@ -7,12 +7,15 @@ public interface ProfileContract {
         void setDarkThemeEnabled(boolean isEnabled);
         void setSelectedLanguage(String languageCode);
         void navigateToAuth();
+        void showMessage(String message);
         void showError(String message);
     }
 
     interface Presenter {
         void loadProfileState();
         void onLogoutClicked();
+        void onBackupClicked();
+        void onRestoreClicked();
         void onSignInClicked();
         void onDarkThemeChanged(boolean isEnabled);
         void onLanguageSelected(String languageCode);
