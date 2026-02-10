@@ -50,7 +50,7 @@ public class ExploreFragment extends Fragment implements SearchView {
     private TextView searchTypeView;
     private MaterialButtonToggleGroup toggleGroup;
     private TextWatcher searchTextWatcher;
-    private SearchType currentSearchType = SearchType.CATEGORIES;
+    private SearchType currentSearchType = SearchType.MEALS;
 
     @Nullable
     @Override
@@ -71,7 +71,7 @@ public class ExploreFragment extends Fragment implements SearchView {
         searchEditText = binding.searchInput;
         searchTypeView = binding.searchingTypeTv;
         toggleGroup = binding.toggleGroup;
-        toggleGroup.check(binding.categoriesButton.getId());
+        toggleGroup.clearChecked();
         updateSearchTypeView(currentSearchType);
 
         searchEditText.setOnEditorActionListener((v, actionId, event) -> {
@@ -139,18 +139,12 @@ public class ExploreFragment extends Fragment implements SearchView {
         searchEditText.addTextChangedListener(searchTextWatcher);
 
         toggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
-            if (!isChecked) {
-                return;
+            SearchType newSearchType = resolveSearchType(group.getCheckedButtonId());
+            if (newSearchType != currentSearchType) {
+                currentSearchType = newSearchType;
+                updateSearchTypeView(currentSearchType);
+                emitSearchQuery();
             }
-            if (checkedId == binding.categoriesButton.getId()) {
-                currentSearchType = SearchType.CATEGORIES;
-            } else if (checkedId == binding.countriesButton.getId()) {
-                currentSearchType = SearchType.COUNTRIES;
-            } else if (checkedId == binding.ingredientsButton.getId()) {
-                currentSearchType = SearchType.INGREDIENTS;
-            }
-            updateSearchTypeView(currentSearchType);
-            emitSearchQuery();
         });
 
         disposables.add(
@@ -186,6 +180,19 @@ public class ExploreFragment extends Fragment implements SearchView {
         if (searchTypeView != null) {
             searchTypeView.setText(getString(type.getLabelRes()));
         }
+    }
+
+    private SearchType resolveSearchType(int checkedId) {
+        if (checkedId == binding.categoriesButton.getId()) {
+            return SearchType.CATEGORIES;
+        }
+        if (checkedId == binding.countriesButton.getId()) {
+            return SearchType.COUNTRIES;
+        }
+        if (checkedId == binding.ingredientsButton.getId()) {
+            return SearchType.INGREDIENTS;
+        }
+        return SearchType.MEALS;
     }
 
     private void clearListState() {

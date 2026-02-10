@@ -6,6 +6,7 @@ import com.nadin.yummy_planner.data.meal.model.Meal;
 import com.nadin.yummy_planner.data.meal.model.MealResponse;
 import com.nadin.yummy_planner.data.network.Network;
 
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
@@ -84,21 +85,21 @@ public class MealRemoteDatasource {
     }
     public Single<List<Meal>> searchMealsByName(String name) {
         return api.searchMealsByName(name)
-                .map(MealResponse::getMeals);
+                .map(response -> response.getMeals() != null ? response.getMeals() : Collections.emptyList());
     }
 
     public Single<List<Meal>> searchMealsByIngredient(String ingredient) {
         return api.searchMealsByIngredient(ingredient)
-                .map(MealResponse::getMeals);
+                .map(response -> response.getMeals() != null ? response.getMeals() : Collections.emptyList());
     }
 
     public Single<List<Meal>> searchMealsByCategory(String category) {
         return api.searchMealsByCategory(category)
-                .map(MealResponse::getMeals);
+                .map(response -> response.getMeals() != null ? response.getMeals() : Collections.emptyList());
     }
 
     public Single<List<Meal>> searchMealsByCountry(String country) {
         return api.searchMealsByCountry(country)
-                .map(MealResponse::getMeals);
+                .map(response -> response.getMeals() != null ? response.getMeals() : Collections.emptyList());
     }
 }
