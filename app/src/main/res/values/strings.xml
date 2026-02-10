@@ -30,6 +30,7 @@
     <string name="unlock_planner_title">Unlock Planner</string>
     <string name="unlock_planner_message">Login or signup to add meals to your plan.</string>
     <string name="retry">Retry</string>
+    <string name="close">Close</string>
     <string name="name">Name</string>
     <string name="home">Home</string>
     <string name="explore">Explore</string>

@@ -69,7 +69,7 @@ public class AuthScreen extends Fragment implements AuthContract.View {
         viewStateController = new ViewStateController(
                 binding,
                 requireContext(),
-                binding.fragmentAuth
+                binding.fragmentAuthContent
         );
         viewStateController.showContent();
 
@@ -83,6 +83,7 @@ public class AuthScreen extends Fragment implements AuthContract.View {
         binding.viewState.btnRetry.setOnClickListener(v -> {
             performAuthAction();
         });
+        binding.viewState.btnClose.setOnClickListener(v -> viewStateController.showContent());
 
 
         binding.toggleBtnGroup.setOnPositionChangedListener(new SegmentedButtonGroup.OnPositionChangedListener() {
