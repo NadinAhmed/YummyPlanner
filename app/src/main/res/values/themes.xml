@@ -6,6 +6,8 @@
         <item name="android:fontFamily">@font/plus_jakarta_sans</item>
         <item name="colorOutline">@color/borderColor</item>
         <item name="android:headerBackground">@color/primaryColor</item>
+        <item name="android:statusBarColor">@color/primaryColor</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.YummyPlanner" parent="Base.Theme.YummyPlanner" />
