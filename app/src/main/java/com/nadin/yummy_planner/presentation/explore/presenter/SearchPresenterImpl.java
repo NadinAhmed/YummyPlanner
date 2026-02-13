@@ -22,7 +22,7 @@ public class SearchPresenterImpl implements SearchPresenter {
 
     private void handleSearchError(Throwable error) {
         if (error instanceof UnknownHostException) {
-            searchView.displayError("No internet connection. Please check your network.");
+            searchView.displayError("No internet connection.\nPlease check your network.");
         } else {
             searchView.displayError(error.getMessage());
         }

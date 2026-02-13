@@ -1,10 +1,13 @@
 package com.nadin.yummy_planner.presentation.home.presenter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.nadin.yummy_planner.data.meal.MealRepo;
 import com.nadin.yummy_planner.data.meal.model.Meal;
 import com.nadin.yummy_planner.presentation.home.view.HomeView;
+
+import java.net.UnknownHostException;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 
@@ -17,6 +20,15 @@ public class HomePresenterImpl implements HomePresenter{
         mealRepo = new MealRepo(context);
     }
 
+    private void handleSearchError(Throwable error) {
+        if (error instanceof UnknownHostException) {
+            homeView.showError("No internet connection.\nPlease check your network.");
+        } else {
+            homeView.showError(error.getMessage());
+        }
+    }
+
+    @SuppressLint("CheckResult")
     @Override
     public void getRandomMeal() {
         mealRepo.getRandomMeal()
@@ -26,18 +38,20 @@ public class HomePresenterImpl implements HomePresenter{
                     homeView.setRandomMeal(meal);
                 }, error -> {
                     homeView.hideLoading();
-                    homeView.showError(error.getMessage());
+                    this.handleSearchError(error);
                 });
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void addMealToFav(Meal meal) {
         mealRepo.addToFavourite(meal)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(homeView::onMealAddToFavSuccess,
-                        error -> homeView.showError(error.getMessage()));
+                        this::handleSearchError);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void getPopularMeals() {
         mealRepo.getPopularMeals()
@@ -47,7 +61,7 @@ public class HomePresenterImpl implements HomePresenter{
                     homeView.setPopularMeals(meals);
                 }, error -> {
                     homeView.hideLoading();
-                    homeView.showError(error.getMessage());
+                    this.handleSearchError(error);
                 });
     }
 }

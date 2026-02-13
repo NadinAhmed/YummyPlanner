@@ -50,6 +50,7 @@ public class HomeFragment extends Fragment implements HomeView {
     private Meal currentMeal;
     private AuthDataSource authDataSource;
     private AuthRequiredDialog authRequiredDialog;
+    TextView errorTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,7 @@ public class HomeFragment extends Fragment implements HomeView {
         popularMealsRecyclerView = binding.recyclerPopularMeals;
         popularMealsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         favButton = view.findViewById(R.id.favorite_card_view);
+        errorTextView = binding.errorMessageTv;
 
         viewRecipe.setOnClickListener(v -> {
             Bundle bundle =  new Bundle();
@@ -119,6 +121,7 @@ public class HomeFragment extends Fragment implements HomeView {
 
     @Override
     public void showError(String error) {
+        errorTextView.setText(error);
         errorLayout.setVisibility(VISIBLE);
         binding.homeContentScrollView.setVisibility(GONE);
     }
