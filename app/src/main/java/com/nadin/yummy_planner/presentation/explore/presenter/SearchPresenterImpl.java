@@ -6,47 +6,50 @@ import android.content.Context;
 import com.nadin.yummy_planner.data.meal.MealRepo;
 import com.nadin.yummy_planner.presentation.explore.view.SearchView;
 
+import java.net.UnknownHostException;
+
 
 public class SearchPresenterImpl implements SearchPresenter {
     SearchView searchView;
     MealRepo mealRepo;
+    Context context;
 
     public SearchPresenterImpl(SearchView searchView, Context context) {
         this.searchView = searchView;
+        this.context = context;
         mealRepo = new MealRepo(context);
+    }
+
+    private void handleSearchError(Throwable error) {
+        if (error instanceof UnknownHostException) {
+            searchView.displayError("No internet connection. Please check your network.");
+        } else {
+            searchView.displayError(error.getMessage());
+        }
     }
 
     @SuppressLint("CheckResult")
     @Override
     public void searchMealsByName(String name) {
         mealRepo.searchMealsByName(name).subscribe(
-                meals -> {
-                     searchView.displayMeals(meals);
-                }, error -> {
-                    searchView.displayError(error.getMessage());
-                });
+                searchView::displayMeals,
+                this::handleSearchError);
     }
 
     @SuppressLint("CheckResult")
     @Override
     public void searchMealsByIngredient(String ingredient) {
         mealRepo.searchMealsByIngredient(ingredient).subscribe(
-                meals -> {
-                    searchView.displayMeals(meals);
-                }, error -> {
-                    searchView.displayError(error.getMessage());
-                });
+                searchView::displayMeals,
+                this::handleSearchError);
     }
 
     @SuppressLint("CheckResult")
     @Override
     public void searchMealsByCategory(String category) {
         mealRepo.searchMealsByCategory(category).subscribe(
-                meals -> {
-                    searchView.displayMeals(meals);
-                }, error -> {
-                    searchView.displayError(error.getMessage());
-                });
+                searchView::displayMeals,
+                this::handleSearchError);
 
     }
 
@@ -54,11 +57,8 @@ public class SearchPresenterImpl implements SearchPresenter {
     @Override
     public void searchMealsByCountry(String area) {
         mealRepo.searchMealsByCountry(area).subscribe(
-                meals -> {
-                    searchView.displayMeals(meals);
-                }, error -> {
-                    searchView.displayError(error.getMessage());
-                });
+                searchView::displayMeals,
+                this::handleSearchError);
     }
 }
 
