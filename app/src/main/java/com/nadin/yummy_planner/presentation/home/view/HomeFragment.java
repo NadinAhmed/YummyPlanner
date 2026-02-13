@@ -98,16 +98,19 @@ public class HomeFragment extends Fragment implements HomeView {
     @Override
     public void showLoading() {
         loadingLayout.setVisibility(VISIBLE);
+        binding.homeContentScrollView.setVisibility(GONE);
     }
 
     @Override
     public void hideLoading() {
         loadingLayout.setVisibility(GONE);
+        binding.homeContentScrollView.setVisibility(VISIBLE);
     }
 
     @Override
     public void showError(String error) {
         errorLayout.setVisibility(VISIBLE);
+        binding.homeContentScrollView.setVisibility(GONE);
     }
 
     @SuppressLint("SetTextI18n")
