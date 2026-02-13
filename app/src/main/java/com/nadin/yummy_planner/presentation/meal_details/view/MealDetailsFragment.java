@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,10 +20,12 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
 import com.nadin.yummy_planner.R;
+import com.nadin.yummy_planner.data.auth.datasource.AuthDataSource;
 import com.nadin.yummy_planner.data.meal.model.Meal;
 import com.nadin.yummy_planner.databinding.FragmentMealDetailsBinding;
 import com.nadin.yummy_planner.presentation.meal_details.presenter.MealDetailsPresenter;
 import com.nadin.yummy_planner.presentation.meal_details.presenter.MealDetailsPresenterImpl;
+import com.nadin.yummy_planner.utils.AuthRequiredDialog;
 import com.nadin.yummy_planner.utils.SuccessDialog;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
@@ -49,6 +52,8 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     private SuccessDialog successDialog;
     private MealDetailsPresenter presenter;
     private Button addToPlanButton;
+    private AuthDataSource authDataSource;
+    private AuthRequiredDialog authRequiredDialog;
 
 
     @Override
@@ -85,6 +90,8 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         favCard = binding.favoriteButtonContainer;
         addToPlanButton = binding.addToPlanButton;
         successDialog = new SuccessDialog();
+        authDataSource = new AuthDataSource(requireContext());
+        authRequiredDialog = new AuthRequiredDialog();
         presenter = new MealDetailsPresenterImpl(requireContext(), this);
 
         if (meal != null) {
@@ -132,6 +139,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
             favCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (authDataSource.isGuestUser()) {
+                        authRequiredDialog.show(requireContext(), () -> androidx.navigation.fragment.NavHostFragment.findNavController(MealDetailsFragment.this).navigate(R.id.authScreen));
+                        return;
+                    }
                     presenter.addMealToFav(meal);
                 }
             });
@@ -139,6 +150,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
             addToPlanButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (authDataSource.isGuestUser()) {
+                        authRequiredDialog.show(requireContext(), () -> androidx.navigation.fragment.NavHostFragment.findNavController(MealDetailsFragment.this).navigate(R.id.authScreen));
+                        return;
+                    }
                     Calendar calendar = Calendar.getInstance();
                     DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), R.style.CustomDatePickerTheme, (view, year, month, dayOfMonth) -> {
                         Calendar selectedDate = Calendar.getInstance();
@@ -150,7 +165,16 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
                         long date = selectedDate.getTimeInMillis();
                         presenter.addMealToPlan(meal, date);
                     }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                    Calendar minDateCalendar = Calendar.getInstance();
+                    minDateCalendar.set(Calendar.HOUR_OF_DAY, 0);
+                    minDateCalendar.set(Calendar.MINUTE, 0);
+                    minDateCalendar.set(Calendar.SECOND, 0);
+                    minDateCalendar.set(Calendar.MILLISECOND, 0);
+                    datePickerDialog.getDatePicker().setMinDate(minDateCalendar.getTimeInMillis());
                     datePickerDialog.show();
+                    int buttonColor = ContextCompat.getColor(requireContext(), R.color.primaryTextColor);
+                    datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(buttonColor);
+                    datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(buttonColor);
                 }
             });
 

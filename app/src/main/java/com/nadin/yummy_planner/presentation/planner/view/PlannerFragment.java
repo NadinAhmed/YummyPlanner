@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nadin.yummy_planner.R;
+import com.nadin.yummy_planner.data.auth.datasource.AuthDataSource;
 import com.nadin.yummy_planner.data.meal.model.PlannerMeal;
 import com.nadin.yummy_planner.databinding.FragmentPlannerBinding;
 import com.nadin.yummy_planner.presentation.planner.model.Day;
@@ -26,10 +29,15 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+
 public class PlannerFragment extends Fragment implements PlannerView, OnClickListener {
 
     private FragmentPlannerBinding binding;
     private PlannerPresenter plannerPresenter;
+    private AuthDataSource authDataSource;
+    private final CompositeDisposable disposables = new CompositeDisposable();
 
 
     public PlannerFragment() {}
@@ -44,6 +52,15 @@ public class PlannerFragment extends Fragment implements PlannerView, OnClickLis
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        authDataSource = new AuthDataSource(requireContext());
+
+        if (authDataSource.isGuestUser()) {
+            binding.plannerContentGroup.setVisibility(View.GONE);
+            binding.guestPromptLayout.setVisibility(View.VISIBLE);
+            binding.btnAuthFromPlanner.setOnClickListener(v -> NavHostFragment.findNavController(PlannerFragment.this).navigate(R.id.authScreen));
+            return;
+        }
+
         plannerPresenter = new PlannerPresenterImpl(getContext());
         setupCalendarRecyclerView();
         setupMealsRecyclerView();
@@ -105,21 +122,35 @@ public class PlannerFragment extends Fragment implements PlannerView, OnClickLis
 
     @Override
     public void onDayClick(long date) {
-        plannerPresenter.getMealsByDate(date).observe(getViewLifecycleOwner(), meals -> {
-            if (meals.isEmpty()) {
-                binding.mealsRecyclerView.setVisibility(View.GONE);
-                binding.emptyView.setVisibility(View.VISIBLE);
-            } else {
-                binding.mealsRecyclerView.setVisibility(View.VISIBLE);
-                binding.emptyView.setVisibility(View.GONE);
-                MealPlannerAdapter mealPlannerAdapter = new MealPlannerAdapter(meals, this, requireContext());
-                binding.mealsRecyclerView.setAdapter(mealPlannerAdapter);
-            }
-        });
+        disposables.clear();
+        disposables.add(plannerPresenter.getMealsByDate(date)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(meals -> {
+                    if (meals.isEmpty()) {
+                        binding.mealsRecyclerView.setVisibility(View.GONE);
+                        binding.emptyView.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.mealsRecyclerView.setVisibility(View.VISIBLE);
+                        binding.emptyView.setVisibility(View.GONE);
+                        MealPlannerAdapter mealPlannerAdapter = new MealPlannerAdapter(meals, this, requireContext());
+                        binding.mealsRecyclerView.setAdapter(mealPlannerAdapter);
+                    }
+                }, throwable -> {
+                }));
     }
 
     @Override
     public void onRemoveMealClick(PlannerMeal plannerMeal) {
-        plannerPresenter.deleteMealFromPlanner(plannerMeal);
+        disposables.add(plannerPresenter.deleteMealFromPlanner(plannerMeal)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                }, throwable -> {
+                }));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        disposables.clear();
     }
 }

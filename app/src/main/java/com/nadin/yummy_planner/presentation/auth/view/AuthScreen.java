@@ -1,7 +1,12 @@
 package com.nadin.yummy_planner.presentation.auth.view;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -25,6 +30,7 @@ import java.util.Objects;
 public class AuthScreen extends Fragment implements AuthContract.View {
     private AuthMode currentMode = AuthMode.LOGIN;
     private AuthPresenter presenter;
+    private ActivityResultLauncher<Intent> googleSignInLauncher;
 
     private FragmentAuthBinding binding;
 
@@ -37,7 +43,17 @@ public class AuthScreen extends Fragment implements AuthContract.View {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        presenter = new AuthPresenter(this);
+        presenter = new AuthPresenter(this, requireContext());
+        googleSignInLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        presenter.completeGoogleLogin(result.getData());
+                    } else {
+                        onError(getString(R.string.google_sign_in_cancelled));
+                    }
+                }
+        );
     }
 
     @Override
@@ -53,7 +69,7 @@ public class AuthScreen extends Fragment implements AuthContract.View {
         viewStateController = new ViewStateController(
                 binding,
                 requireContext(),
-                binding.fragmentAuth
+                binding.fragmentAuthContent
         );
         viewStateController.showContent();
 
@@ -61,9 +77,13 @@ public class AuthScreen extends Fragment implements AuthContract.View {
             performAuthAction();
         });
 
+        binding.btnGoogle.setOnClickListener(v -> presenter.loginWithGoogle());
+        binding.btnGuest.setOnClickListener(v -> presenter.continueAsGuest());
+
         binding.viewState.btnRetry.setOnClickListener(v -> {
             performAuthAction();
         });
+        binding.viewState.btnClose.setOnClickListener(v -> viewStateController.showContent());
 
 
         binding.toggleBtnGroup.setOnPositionChangedListener(new SegmentedButtonGroup.OnPositionChangedListener() {
@@ -116,6 +136,11 @@ public class AuthScreen extends Fragment implements AuthContract.View {
     }
 
     @Override
+    public void launchGoogleSignIn(Intent signInIntent) {
+        googleSignInLauncher.launch(signInIntent);
+    }
+
+    @Override
     public void onSuccess() {
         Log.d("AuthScreen", "onSuccess: ");
         //navigate to main screen
@@ -126,5 +151,16 @@ public class AuthScreen extends Fragment implements AuthContract.View {
     public void onError(String message) {
         Log.d("AuthScreen", "onError: " + message);
         viewStateController.showError(message);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDestroy() {
+        presenter.clear();
+        super.onDestroy();
     }
 }

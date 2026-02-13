@@ -3,12 +3,10 @@ package com.nadin.yummy_planner.presentation.home.presenter;
 import android.content.Context;
 
 import com.nadin.yummy_planner.data.meal.MealRepo;
-import com.nadin.yummy_planner.data.meal.datasource.remote.MealNetworkResponse;
-import com.nadin.yummy_planner.data.meal.datasource.remote.MealRemoteDatasource;
 import com.nadin.yummy_planner.data.meal.model.Meal;
 import com.nadin.yummy_planner.presentation.home.view.HomeView;
 
-import java.util.List;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 
 public class HomePresenterImpl implements HomePresenter{
     HomeView homeView;
@@ -21,41 +19,35 @@ public class HomePresenterImpl implements HomePresenter{
 
     @Override
     public void getRandomMeal() {
-        mealRepo.getRandomMeal(new MealNetworkResponse() {
-            @Override
-            public void onSuccess(List<Meal> meal) {
-                homeView.hideLoading();
-                homeView.setRandomMeal(meal.get(0));
-            }
-
-            @Override
-            public void onError(String error) {
-                homeView.hideLoading();
-                homeView.showError(error);
-            }
-        });
+        mealRepo.getRandomMeal()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(meal -> {
+                    homeView.hideLoading();
+                    homeView.setRandomMeal(meal);
+                }, error -> {
+                    homeView.hideLoading();
+                    homeView.showError(error.getMessage());
+                });
     }
 
     @Override
     public void addMealToFav(Meal meal) {
-        mealRepo.addToFavourite(meal);
-        homeView.onMealAddToFavSuccess();
+        mealRepo.addToFavourite(meal)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(homeView::onMealAddToFavSuccess,
+                        error -> homeView.showError(error.getMessage()));
     }
 
     @Override
     public void getPopularMeals() {
-        mealRepo.getPopularMeals(new MealNetworkResponse() {
-            @Override
-            public void onSuccess(List<Meal> meal) {
-                homeView.hideLoading();
-                homeView.setPopularMeals(meal);
-            }
-
-            @Override
-            public void onError(String error) {
-                homeView.hideLoading();
-                homeView.showError(error);
-            }
-        });
+        mealRepo.getPopularMeals()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(meals -> {
+                    homeView.hideLoading();
+                    homeView.setPopularMeals(meals);
+                }, error -> {
+                    homeView.hideLoading();
+                    homeView.showError(error.getMessage());
+                });
     }
 }

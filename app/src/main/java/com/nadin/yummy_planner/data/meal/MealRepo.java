@@ -2,17 +2,15 @@ package com.nadin.yummy_planner.data.meal;
 
 import android.content.Context;
 
-import androidx.lifecycle.LiveData;
-
 import com.nadin.yummy_planner.data.meal.datasource.local.MealLocalDatasource;
-import com.nadin.yummy_planner.data.meal.datasource.remote.MealNetworkResponse;
 import com.nadin.yummy_planner.data.meal.datasource.remote.MealRemoteDatasource;
 import com.nadin.yummy_planner.data.meal.model.Meal;
 import com.nadin.yummy_planner.data.meal.model.PlannerMeal;
 
 import java.util.List;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -25,64 +23,86 @@ public class MealRepo {
         mealLocalDatasource = new MealLocalDatasource(context);
     }
 
-    public void getRandomMeal(MealNetworkResponse response) {
-        mealRemoteDatasource.getRandomMeal(response);
+    public Single<Meal> getRandomMeal() {
+        return mealRemoteDatasource.getRandomMeal()
+                .subscribeOn(Schedulers.io());
     }
 
-    public void getPopularMeals(MealNetworkResponse response) {
-        mealRemoteDatasource.getPopularMeals(response);
+    public Single<List<Meal>> getPopularMeals() {
+        return mealRemoteDatasource.getPopularMeals()
+                .subscribeOn(Schedulers.io());
     }
 
-    public void addToFavourite(Meal meal) {
-        mealLocalDatasource.addToFavourite(meal);
+    public Completable addToFavourite(Meal meal) {
+        return mealLocalDatasource.addToFavourite(meal)
+                .subscribeOn(Schedulers.io());
     }
 
-    public void deleteFromFavourite(Meal meal) {
-        mealLocalDatasource.removeFromFavourite(meal);
+    public Completable deleteFromFavourite(Meal meal) {
+        return mealLocalDatasource.removeFromFavourite(meal)
+                .subscribeOn(Schedulers.io());
     }
 
-    public LiveData<List<Meal>> getAllFavMeals() {
+    public Flowable<List<Meal>> getAllFavMeals() {
         return mealLocalDatasource.getAllFavMeals();
     }
 
-    public void addMealToPlanner(Meal meal, long date) {
-        mealLocalDatasource.addMealToPlanner(meal, date);
+    public Completable addMealToPlanner(Meal meal, long date) {
+        return mealLocalDatasource.addMealToPlanner(meal, date)
+                .subscribeOn(Schedulers.io());
     }
 
-    public void removeMealFromPlanner(PlannerMeal meal) {
-        mealLocalDatasource.removeMealFromPlanner(meal);
+    public Completable removeMealFromPlanner(PlannerMeal meal) {
+        return mealLocalDatasource.removeMealFromPlanner(meal)
+                .subscribeOn(Schedulers.io());
     }
 
-    public LiveData<List<PlannerMeal>> getMealByDate(long date) {
+    public Flowable<List<PlannerMeal>> getMealByDate(long date) {
         return mealLocalDatasource.getMealByDate(date);
+    }
+
+    public Single<List<Meal>> getAllFavMealsOnce() {
+        return mealLocalDatasource.getAllFavMealsOnce()
+                .subscribeOn(Schedulers.io());
+    }
+
+    public Single<List<PlannerMeal>> getAllPlannerMealsOnce() {
+        return mealLocalDatasource.getAllPlannerMealsOnce()
+                .subscribeOn(Schedulers.io());
+    }
+
+    public Completable replaceAllLocalData(List<Meal> favourites, List<PlannerMeal> plannerMeals) {
+        return mealLocalDatasource.replaceAllLocalData(favourites, plannerMeals)
+                .subscribeOn(Schedulers.io());
+    }
+
+    public Completable clearAllLocalData() {
+        return mealLocalDatasource.clearAllLocalData()
+                .subscribeOn(Schedulers.io());
     }
 
     public Single<Meal> getMealById(String id) {
         return mealRemoteDatasource.getMealById(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.io());
     }
+
     public Single<List<Meal>> searchMealsByName(String name) {
         return mealRemoteDatasource.searchMealsByName(name)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.io());
     }
 
     public Single<List<Meal>> searchMealsByIngredient(String ingredient) {
         return mealRemoteDatasource.searchMealsByIngredient(ingredient)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.io());
     }
 
     public Single<List<Meal>> searchMealsByCategory(String category) {
         return mealRemoteDatasource.searchMealsByCategory(category)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.io());
     }
 
     public Single<List<Meal>> searchMealsByCountry(String area) {
         return mealRemoteDatasource.searchMealsByCountry(area)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.io());
     }
 }

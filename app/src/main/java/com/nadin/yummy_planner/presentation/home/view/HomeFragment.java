@@ -23,10 +23,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.android.material.card.MaterialCardView;
 import com.nadin.yummy_planner.R;
+import com.nadin.yummy_planner.data.auth.datasource.AuthDataSource;
 import com.nadin.yummy_planner.data.meal.model.Meal;
 import com.nadin.yummy_planner.databinding.FragmentHomeBinding;
 import com.nadin.yummy_planner.presentation.home.presenter.HomePresenter;
 import com.nadin.yummy_planner.presentation.home.presenter.HomePresenterImpl;
+import com.nadin.yummy_planner.utils.AuthRequiredDialog;
 import com.nadin.yummy_planner.utils.SuccessDialog;
 
 import java.util.List;
@@ -46,6 +48,8 @@ public class HomeFragment extends Fragment implements HomeView {
     private MaterialCardView favButton;
     private SuccessDialog successDialog;
     private Meal currentMeal;
+    private AuthDataSource authDataSource;
+    private AuthRequiredDialog authRequiredDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,6 +83,8 @@ public class HomeFragment extends Fragment implements HomeView {
         });
 
         successDialog = new SuccessDialog();
+        authRequiredDialog = new AuthRequiredDialog();
+        authDataSource = new AuthDataSource(requireContext());
         presenter = new HomePresenterImpl(this, getContext());
 
         popularMealsAdapter = new PopularMealsAdapter();
@@ -87,6 +93,10 @@ public class HomeFragment extends Fragment implements HomeView {
         favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (authDataSource.isGuestUser()) {
+                    authRequiredDialog.show(requireContext(), () -> androidx.navigation.fragment.NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.authScreen));
+                    return;
+                }
                 presenter.addMealToFav(currentMeal);
             }
         });

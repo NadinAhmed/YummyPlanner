@@ -6,6 +6,8 @@ import com.nadin.yummy_planner.data.meal.MealRepo;
 import com.nadin.yummy_planner.data.meal.model.Meal;
 import com.nadin.yummy_planner.presentation.meal_details.view.MealDetailsView;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+
 public class MealDetailsPresenterImpl implements MealDetailsPresenter{
     MealDetailsView mealDetailsView;
     MealRepo repo;
@@ -16,13 +18,19 @@ public class MealDetailsPresenterImpl implements MealDetailsPresenter{
     }
     @Override
     public void addMealToFav(Meal meal) {
-        repo.addToFavourite(meal);
-        mealDetailsView.onMealAddToFavSuccess();
+        repo.addToFavourite(meal)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mealDetailsView::onMealAddToFavSuccess,
+                        error -> {
+                        });
     }
 
     @Override
     public void addMealToPlan(Meal meal, long date) {
-        repo.addMealToPlanner(meal, date);
-        mealDetailsView.onMealAddToPlanSuccess();
+        repo.addMealToPlanner(meal, date)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mealDetailsView::onMealAddToPlanSuccess,
+                        error -> {
+                        });
     }
 }

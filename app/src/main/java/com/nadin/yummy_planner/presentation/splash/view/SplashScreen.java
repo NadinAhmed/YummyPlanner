@@ -1,4 +1,4 @@
-package com.nadin.yummy_planner.presentation.splash;
+package com.nadin.yummy_planner.presentation.splash.view;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -16,23 +16,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nadin.yummy_planner.R;
+import com.nadin.yummy_planner.presentation.splash.presenter.SplashPresenter;
+import com.nadin.yummy_planner.presentation.splash.presenter.SplashPresenterImpl;
 
 @SuppressLint("CustomSplashScreen")
-public class SplashScreen extends Fragment {
+public class SplashScreen extends Fragment implements SplashView {
 
-    //TODO: check from firebase if user is logged in
-    boolean isLoggedIn = false;
-    int destination = isLoggedIn
-            ? R.id.action_splashScreen_to_homeFragment
-            : R.id.action_splashScreen_to_authScreen;
-    NavController navController;
+    private NavController navController;
+    private SplashPresenter presenter;
 
     public SplashScreen() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        presenter = new SplashPresenterImpl(this, requireContext());
     }
 
     @Override
@@ -47,7 +45,17 @@ public class SplashScreen extends Fragment {
 
         navController = NavHostFragment.findNavController(this);
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            navController.navigate(destination);
+            presenter.decideStartDestination();
         }, 3000);
+    }
+
+    @Override
+    public void navigateToHome() {
+        navController.navigate(R.id.action_splashScreen_to_homeFragment);
+    }
+
+    @Override
+    public void navigateToAuth() {
+        navController.navigate(R.id.action_splashScreen_to_authScreen);
     }
 }

@@ -112,4 +112,48 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/calendarRecyclerView" />
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/plannerContentGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="backButton,textView,cardView,calendarRecyclerView,mealsRecyclerView,emptyView" />
+
+    <LinearLayout
+        android:id="@+id/guestPromptLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/plus_jakarta_sans_extrabold"
+            android:text="@string/unlock_planner_title"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/plus_jakarta_sans_medium"
+            android:gravity="center"
+            android:text="@string/unlock_planner_message"
+            android:textColor="@color/secondaryTextColor"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnAuthFromPlanner"
+            style="@style/PrimaryFilledButton"
+            android:layout_marginTop="20dp"
+            android:text="@string/login_or_signup" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
