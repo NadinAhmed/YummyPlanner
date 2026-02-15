@@ -74,7 +74,7 @@
     </style>
 
     <style name="MyActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="android:color">@color/itemRippleEffect</item>
+        <item name="android:color">@color/primaryColorWith30Opacity</item>
         <item name="shapeAppearance">@style/RoundedIndicator</item>
     </style>
 

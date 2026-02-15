@@ -78,7 +78,9 @@
                 android:textSize="14sp"
                 android:paddingVertical="12dp"
                 android:paddingHorizontal="16dp"
-                android:textColor="@color/secondaryTextColor" />
+                android:textColor="@color/toggle_button_text_color"
+                app:backgroundTint="@color/toggle_button_background_tint"
+                app:strokeColor="@color/toggle_button_stroke_color" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/countries_button"
@@ -88,7 +90,10 @@
                 android:text="@string/countries"
                 android:textSize="14sp"
                 android:paddingVertical="12dp"
-                android:paddingHorizontal="16dp"/>
+                android:paddingHorizontal="16dp"
+                android:textColor="@color/toggle_button_text_color"
+                app:backgroundTint="@color/toggle_button_background_tint"
+                app:strokeColor="@color/toggle_button_stroke_color"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/ingredients_button"
@@ -98,7 +103,10 @@
                 android:text="@string/ingredients"
                 android:textSize="14sp"
                 android:paddingVertical="12dp"
-                android:paddingHorizontal="16dp"/>
+                android:paddingHorizontal="16dp"
+                android:textColor="@color/toggle_button_text_color"
+                app:backgroundTint="@color/toggle_button_background_tint"
+                app:strokeColor="@color/toggle_button_stroke_color"/>
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <TextView
