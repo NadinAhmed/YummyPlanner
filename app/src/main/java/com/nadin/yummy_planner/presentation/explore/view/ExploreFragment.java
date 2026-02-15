@@ -166,6 +166,9 @@ public class ExploreFragment extends Fragment implements SearchView {
     }
 
     private void handleSearchRequest(SearchRequest request) {
+        if (binding == null) {
+            return;
+        }
         String trimmedQuery = request.query.trim();
         if (trimmedQuery.isEmpty()) {
             clearListState();
@@ -204,11 +207,13 @@ public class ExploreFragment extends Fragment implements SearchView {
 
     @Override
     public void onDestroyView() {
+        super.onDestroyView();
         if (searchEditText != null && searchTextWatcher != null) {
             searchEditText.removeTextChangedListener(searchTextWatcher);
+            searchTextWatcher = null;
         }
         disposables.clear();
-        super.onDestroyView();
+        binding = null;
     }
 
     private static final class SearchRequest {
