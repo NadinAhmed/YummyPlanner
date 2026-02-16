@@ -2,6 +2,14 @@
 
 Yummy Planner is a beautiful and user-friendly Android application for meal planning and recipe discovery. It helps users find new recipes, plan their meals for the week, and save their favorite dishes.
 
+## Demo Video
+
+<p align="center">
+  <a href="https://youtube.com/shorts/mkEddEvElqA">
+    <img src="https://github.com/NadinAhmed/YummyPlanner/blob/main/Cover%20Photo.png">
+  </a>
+</p>
+
 ## ✨ Features
 
 -  **Meal of the Day:** Get a daily random meal suggestion to inspire your cooking.
